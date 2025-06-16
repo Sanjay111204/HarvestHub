@@ -25,7 +25,7 @@ app.use("/api/Seller", postRoutes);
 app.use("/api/request", requestRoutes);
 
 app.use(express.static(path.join(_dirname, "/frontend/dist")));
-app.get("*", (_, res) => {
+app.get("*name", (req, res) => {
   res.sendFile(path.resolve(_dirname, "frontend", "dist", "index.html"));
 });
 
