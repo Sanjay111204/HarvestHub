@@ -13,7 +13,13 @@ connect();
 const _dirname = path.resolve();
 
 app.use(express.json());
-app.use(cors());
+app.use(
+  cors({
+    origin: "https://harvesthub-h4eh.onrender.com",
+    methods: ["GET", "POST", "PUT", "DELETE"],
+    credentials: true,
+  })
+);
 app.use("/api/auth", authRoutes);
 app.use("/api/Seller", postRoutes);
 app.use("/api/request", requestRoutes);
