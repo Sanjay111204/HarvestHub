@@ -22,10 +22,13 @@ const signpage = () => {
 
   const Login = async () => {
     try {
-      const res = await axios.post("http://localhost:1112/api/auth/login", {
-        email,
-        password,
-      });
+      const res = await axios.post(
+        "https://harvesthub-h4eh.onrender.com/api/auth/login",
+        {
+          email,
+          password,
+        }
+      );
       alert("Login successful!");
       // You can store the token or redirect from here if needed
       console.log(res.data.token);

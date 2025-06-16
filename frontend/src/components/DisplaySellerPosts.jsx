@@ -15,9 +15,12 @@ const DisplaySellerPosts = (props) => {
 
   const handleDelete = async () => {
     try {
-      const res = await axios.post("http://localhost:1112/api/Seller/remove", {
-        id: data._id,
-      });
+      const res = await axios.post(
+        "https://harvesthub-h4eh.onrender.com/api/Seller/remove",
+        {
+          id: data._id,
+        }
+      );
       alert("successfully deleted");
       props.onDeleteSuccess();
     } catch (err) {

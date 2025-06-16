@@ -27,11 +27,14 @@ const registerPage = () => {
       return;
     }
     try {
-      const res = await axios.post("http://localhost:1112/api/auth/register", {
-        name,
-        email,
-        password,
-      });
+      const res = await axios.post(
+        "https://harvesthub-h4eh.onrender.com/api/auth/register",
+        {
+          name,
+          email,
+          password,
+        }
+      );
       alert("Successfully registered");
       console.log(res.data.token);
       console.log(res.data.user.id);
