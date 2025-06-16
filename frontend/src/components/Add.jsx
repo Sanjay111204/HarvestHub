@@ -74,15 +74,18 @@ const Add = () => {
       return;
     } else {
       try {
-        const res = await axios.post("http://localhost:1112/api/Seller/push", {
-          user_id: userid,
-          name: ownerName,
-          machine: Machine,
-          location,
-          costperday: price,
-          phone: phno,
-          image64bit: imagefile,
-        });
+        const res = await axios.post(
+          "https://harvesthub-h4eh.onrender.com/api/Seller/push",
+          {
+            user_id: userid,
+            name: ownerName,
+            machine: Machine,
+            location,
+            costperday: price,
+            phone: phno,
+            image64bit: imagefile,
+          }
+        );
         alert("successfully Posted");
         navigate("/Seller", { state: loc.state });
       } catch (err) {
