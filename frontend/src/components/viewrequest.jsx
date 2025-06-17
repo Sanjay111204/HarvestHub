@@ -19,12 +19,9 @@ const viewrequest = (props) => {
     console.log(name);
     const fetch = async () => {
       try {
-        const res = await axios.post(
-          "https://harvesthub-h4eh.onrender.com/api/request/pull",
-          {
-            id,
-          }
-        );
+        const res = await axios.post("http://localhost:1112/api/request/pull", {
+          id,
+        });
         console.log(res.data);
         setdata(res.data);
         console.log("Successfully fetched");

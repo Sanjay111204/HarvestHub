@@ -1,13 +1,19 @@
 @import url("https://fonts.googleapis.com/css2?family=Cherry+Bomb+One&display=swap");
-@import url("https://fonts.googleapis.com/css2?family=Noto+Serif+Dives+Akuru&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Noto+Serif+Dives+Akuru&family=Noto+Serif:ital,wght@0,100..900;1,100..900&family=Roboto:ital,wght@0,100..900;1,100..900&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Noto+Serif+Dives+Akuru&family=Noto+Serif:ital,wght@0,100..900;1,100..900&family=Playfair+Display:ital,wght@0,400..900;1,400..900&family=Roboto:ital,wght@0,100..900;1,100..900&display=swap");
 @import "tailwindcss";
 @import "tw-animate-css";
+@import url("https://fonts.googleapis.com/css2?family=Alfa+Slab+One&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Oswald:wght@200..700&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Alfa+Slab+One&family=Noto+Serif+Dives+Akuru&family=Noto+Serif:ital,wght@0,100..900;1,100..900&family=Playfair+Display:ital,wght@0,400..900;1,400..900&family=Roboto:ital,wght@0,100..900;1,100..900&display=swap");
 
 @custom-variant dark (&:is(.dark *));
 
 @theme {
   --font-logo: "Cherry Bomb One", system-ui;
   --font-body: "Noto Serif Dives Akuru", serif;
+  --font-card: "Playfair Display", serif;
+  --font-dash: "Oswald", sans-serif;
 }
 
 @theme inline {

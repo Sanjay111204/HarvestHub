@@ -25,13 +25,10 @@ const handlerequest = (props) => {
     setref(true);
     settemp(false);
     try {
-      const res = await axios.post(
-        "https://harvesthub-h4eh.onrender.com/api/request/update",
-        {
-          id: data._id,
-          newstatus: 1,
-        }
-      );
+      const res = await axios.post("http://localhost:1112/api/request/update", {
+        id: data._id,
+        newstatus: 1,
+      });
     } catch (err) {
       console.log(err);
       alert(`error due to ${err}`);
@@ -42,13 +39,10 @@ const handlerequest = (props) => {
     setref(false);
     settemp(true);
     try {
-      const res = await axios.post(
-        "https://harvesthub-h4eh.onrender.com/api/request/update",
-        {
-          id: data._id,
-          newstatus: 2,
-        }
-      );
+      const res = await axios.post("http://localhost:1112/api/request/update", {
+        id: data._id,
+        newstatus: 2,
+      });
     } catch (err) {
       console.log(err);
       alert(`error due to ${err}`);

@@ -72,25 +72,23 @@ const loginpage = () => {
         <img src={logoimg} className="h-15 w-auto mr-3 pl-5"></img>
         <div className="pt-4 font-logo text-2xl">HarvestHub</div>
         <div
-          className="ml-240 mt-5 cursor-pointer hover:text-red-500 "
+          className="ml-240 mt-5 cursor-pointer hover:text-green-500 "
           onClick={() => {
-            handleSignin();
+            if (!token) handleSignin();
+            else navigate("/");
           }}
         >
           {token ? (
             <div className="flex gap-3 ">
-              <p className="underline mt-3">{name}</p>
               <button
-                className="bg-gray-400 p-2 rounded-xl hover:bg-gray-200 cursor-pointer pt-3"
-                onClick={() => {
-                  navigate("/");
-                }}
+                className="bg-gray-400 p-2 rounded-xl hover:bg-red-400 cursor-pointer pt-3 ml-30 hover:text-black pb-3 px-3"
+                onClick={() => {}}
               >
-                Logout
+                {name}
               </button>
             </div>
           ) : (
-            <p className="underline">Sign_in</p>
+            <p className="underline ml-40">Sign_in</p>
           )}
         </div>
       </div>

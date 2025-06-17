@@ -21,14 +21,16 @@ const signpage = () => {
   }, [loc.state]);
 
   const Login = async () => {
+    if (!email || !password) {
+      alert("Please enter both email and password.");
+      return;
+    }
     try {
-      const res = await axios.post(
-        "https://harvesthub-h4eh.onrender.com/api/auth/login",
-        {
-          email,
-          password,
-        }
-      );
+      console.log(email, password);
+      const res = await axios.post("http://localhost:1112/api/auth/login", {
+        email,
+        password,
+      });
       alert("Login successful!");
       // You can store the token or redirect from here if needed
       console.log(res.data.token);
@@ -51,13 +53,10 @@ const signpage = () => {
   };
   const Loginfree = async () => {
     try {
-      const res = await axios.post(
-        "https://harvesthub-h4eh.onrender.com/api/auth/login",
-        {
-          email: "User111204",
-          password: "111204",
-        }
-      );
+      const res = await axios.post("http://localhost:1112/api/auth/login", {
+        email: "User111204",
+        password: "111204",
+      });
       alert("Login successful!");
       // You can store the token or redirect from here if needed
       console.log(res.data.token);
@@ -125,7 +124,7 @@ const signpage = () => {
           </div>
           <div className="flex  justify-center ">
             <button
-              className="bg-gray-300 p-3 px-5 rounded-2xl hover:bg-gray-400 cursor-pointer pt-4 font-body"
+              className="bg-gray-300 p-3 px-5 rounded-2xl hover:bg-gray-400 cursor-pointer pt-4"
               onClick={() => {
                 Loginfree();
               }}

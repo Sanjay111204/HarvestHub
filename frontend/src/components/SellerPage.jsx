@@ -26,18 +26,12 @@ const SellerPage = () => {
     const verify = async () => {
       try {
         console.log(`token:${a}`);
-        const res = await axios.get(
-          "https://harvesthub-h4eh.onrender.com/api/auth/profile",
-          {
-            headers: { Authorization: `Bearer ${a}` },
-          }
-        );
-        const res1 = await axios.post(
-          "https://harvesthub-h4eh.onrender.com/api/Seller/pull",
-          {
-            id: b,
-          }
-        );
+        const res = await axios.get("http://localhost:1112/api/auth/profile", {
+          headers: { Authorization: `Bearer ${a}` },
+        });
+        const res1 = await axios.post("http://localhost:1112/api/Seller/pull", {
+          id: b,
+        });
         console.log("grand success");
         console.log(res1.data);
         setdata(res1.data);
@@ -73,28 +67,27 @@ const SellerPage = () => {
           <div className="w-12">Rent</div>
         </button>
 
-        <div className="ml-10 mt-5 font-body underline ">
+        <div className="ml-5 mt-2 font-body  ">
           {token ? (
-            <div className="flex gap-3 ">
-              <p className="underline mt-3">{name}</p>
+            <div className="flex ">
               <button
-                className="bg-gray-400 p-2 rounded-xl hover:bg-gray-200 cursor-pointer pt-3"
+                className="bg-gray-400 p-2 rounded-xl hover:bg-red-400 cursor-pointer pt-3 ml-25 px-5 hover:text-black pb-3 underline"
                 onClick={() => {
                   navigate("/");
                 }}
               >
-                Logout
+                {name}
               </button>
             </div>
           ) : (
-            <p className="underline">Sign_in</p>
+            <p className="underline ml-40">Sign_in</p>
           )}
         </div>
       </div>
-      <div className="flex text-xl font-body p-5 bg-gray-400">
-        <div className="pl-140 text-3xl pt-5">Active Post</div>
+      <div className="flex text-xl font-body p-4 bg-gray-400 pb-3">
+        <div className="pl-166 text-2xl pt-3 font-bold">User Posts</div>
         <button
-          className="ml-130 pl-7 pr-10 pt-3 pb-3  bg-gray-300 rounded-2xl cursor-pointer hover:bg-green-300 text-xl flex "
+          className="ml-110 pl-7 pr-10 pt-1 pb-1  bg-gray-300 rounded-2xl cursor-pointer hover:bg-green-300 text-xl flex "
           onClick={() => {
             navigate("/Seller/Add", { state: loc.state });
           }}
@@ -104,22 +97,18 @@ const SellerPage = () => {
         </button>
       </div>
 
-      <div className="min-h-screen items-center justify-center  ">
-        <ul>
-          {data &&
-            data.map((d) => (
-              <li key={d.id}>
-                <DisplaySellerPosts
-                  data={d}
-                  onDeleteSuccess={() => {
-                    setdata((prev) =>
-                      prev.filter((item) => item._id !== d._id)
-                    );
-                  }}
-                />
-              </li>
-            ))}
-        </ul>
+      <div className="min-h-screen justify-center flex gap-6">
+        {data &&
+          data.map((d) => (
+            <div key={d.id}>
+              <DisplaySellerPosts
+                data={d}
+                onDeleteSuccess={() => {
+                  setdata((prev) => prev.filter((item) => item._id !== d._id));
+                }}
+              />
+            </div>
+          ))}
       </div>
     </div>
   );

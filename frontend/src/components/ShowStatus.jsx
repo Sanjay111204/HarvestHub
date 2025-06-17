@@ -20,14 +20,11 @@ const ShowStatus = () => {
     const verify = async () => {
       try {
         console.log(`token:${a}`);
-        const res = await axios.get(
-          "https://harvesthub-h4eh.onrender.com/api/auth/profile",
-          {
-            headers: { Authorization: `Bearer ${a}` },
-          }
-        );
+        const res = await axios.get("http://localhost:1112/api/auth/profile", {
+          headers: { Authorization: `Bearer ${a}` },
+        });
         const res1 = await axios.post(
-          "https://harvesthub-h4eh.onrender.com/api/request/pullstatus",
+          "http://localhost:1112/api/request/pullstatus",
           {
             id: b,
           }
@@ -63,21 +60,20 @@ const ShowStatus = () => {
           <div className="w-12">Lend</div>
         </button>
 
-        <div className="ml-10 mt-5 font-body underline ">
+        <div className="ml-3 mt-2 font-body  ">
           {token ? (
-            <div className="flex gap-3 ">
-              <p className="underline mt-3">{name}</p>
+            <div className="flex ">
               <button
-                className="bg-gray-400 p-2 rounded-xl hover:bg-gray-200 cursor-pointer pt-3"
+                className="bg-gray-400 p-2 rounded-xl hover:bg-red-400 cursor-pointer pt-3 ml-25 px-6 hover:text-black pb-3 underline"
                 onClick={() => {
                   navigate("/");
                 }}
               >
-                Logout
+                {name}
               </button>
             </div>
           ) : (
-            <p className="underline">Sign_in</p>
+            <p className="underline ml-40">Sign_in</p>
           )}
         </div>
       </div>

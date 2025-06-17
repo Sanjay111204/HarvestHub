@@ -24,14 +24,11 @@ const BuyerPage = () => {
     const verify = async () => {
       try {
         console.log(`token:${a}`);
-        const res = await axios.get(
-          "https://harvesthub-h4eh.onrender.com/api/auth/profile",
-          {
-            headers: { Authorization: `Bearer ${a}` },
-          }
-        );
+        const res = await axios.get("http://localhost:1112/api/auth/profile", {
+          headers: { Authorization: `Bearer ${a}` },
+        });
         const res1 = await axios.get(
-          "https://harvesthub-h4eh.onrender.com/api/Seller/pullall",
+          "http://localhost:1112/api/Seller/pullall",
           {}
         );
         setdata(res1.data);
@@ -69,28 +66,29 @@ const BuyerPage = () => {
           <div className="w-12">Lend</div>
         </button>
 
-        <div className="ml-10 mt-2 font-body  ">
+        <div className="ml-5 mt-2 font-body  ">
           {token ? (
-            <div className="flex gap-3 ">
-              <p className="underline mt-3">{name}</p>
+            <div className="flex ">
               <button
-                className="bg-gray-400 p-2 rounded-xl hover:bg-gray-200 cursor-pointer pt-3"
+                className="bg-gray-400 p-2 rounded-xl hover:bg-red-400 cursor-pointer pt-3 ml-25 px-5 hover:text-black pb-3 underline"
                 onClick={() => {
                   navigate("/");
                 }}
               >
-                Logout
+                {name}
               </button>
             </div>
           ) : (
-            <p className="underline">Sign_in</p>
+            <p className="underline ml-40">Sign_in</p>
           )}
         </div>
       </div>
       <div className=" flex   w-full  p-5 font-body  bg-gray-400">
         <div className="w-1/3"></div>
 
-        <div className="w-1/3 text-center text-2xl">Active Post</div>
+        <div className="w-1/3 text-center text-2xl pt-2 font-bold">
+          Active Post
+        </div>
 
         <div className="w-1/3 flex">
           <div

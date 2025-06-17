@@ -25,7 +25,7 @@ const ResponseCard = (props) => {
       <img src={data.image} className="h-40 w-60 m-3" />
       <div className="flex justify-between w-63">
         <div className="ml-3">OwnerName </div>
-        <div className="">{data.owner_name}</div>
+        <div className="">{data.name}</div>
       </div>
       <div className="flex justify-between w-63">
         <div className="ml-3">Machine </div>

@@ -45,12 +45,9 @@ const Add = () => {
     const verify = async () => {
       try {
         console.log(`token:${a}`);
-        const res = await axios.get(
-          "https://harvesthub-h4eh.onrender.com/api/auth/profile",
-          {
-            headers: { Authorization: `Bearer ${a}` },
-          }
-        );
+        const res = await axios.get("http://localhost:1112/api/auth/profile", {
+          headers: { Authorization: `Bearer ${a}` },
+        });
       } catch (error) {
         alert("Login is required..");
         navigate("/");
@@ -74,18 +71,15 @@ const Add = () => {
       return;
     } else {
       try {
-        const res = await axios.post(
-          "https://harvesthub-h4eh.onrender.com/api/Seller/push",
-          {
-            user_id: userid,
-            name: ownerName,
-            machine: Machine,
-            location,
-            costperday: price,
-            phone: phno,
-            image64bit: imagefile,
-          }
-        );
+        const res = await axios.post("http://localhost:1112/api/Seller/push", {
+          user_id: userid,
+          name: ownerName,
+          machine: Machine,
+          location,
+          costperday: price,
+          phone: phno,
+          image64bit: imagefile,
+        });
         alert("successfully Posted");
         navigate("/Seller", { state: loc.state });
       } catch (err) {
@@ -180,12 +174,29 @@ const Add = () => {
       <div className="flex p-5 bg-gray-50 align-middle ">
         <img src={logoimg} className="h-15 w-auto mr-3 pl-5"></img>
         <div className="pt-4 font-logo text-2xl">HarvestHub</div>
-        <div className="ml-30 mt-5 "></div>
+        <div className="ml-240 mt-5 ">
+          {token ? (
+            <div className="flex gap-3 ">
+              <button
+                className="bg-gray-400 p-2 rounded-xl hover:bg-red-400 cursor-pointer pt-3 ml-30 hover:text-black pb-2 px-5 font-body underline "
+                onClick={() => {
+                  navigate("/");
+                }}
+              >
+                {name}
+              </button>
+            </div>
+          ) : (
+            <p className="underline ml-40">Sign_in</p>
+          )}
+        </div>
       </div>
       <div className="w-screen flex flex-row ">
         <div className="w-3/5 p-16 text-2xl font-body">
           <div className="flex">
-            <div className="pt-1 pr-11 mr-17">Name*:-</div>
+            <div className="pt-1 pr-11 mr-17">
+              Name<span className="text-red-600">*</span>:-
+            </div>
             <Input
               type="text"
               placeholder="Enter Name"
@@ -197,7 +208,9 @@ const Add = () => {
             />
           </div>
           <div className="flex pt-15">
-            <div className="pt-1 pr-5 mr-15">Machine*:-</div>
+            <div className="pt-1 pr-5 mr-15">
+              Machine<span className="text-red-600">*</span>:-
+            </div>
             <Select onValueChange={(value) => setMachine(value)}>
               <SelectTrigger className="w-[200px] bg-gray-100 h-12">
                 <SelectValue placeholder="Select machine" />
@@ -215,7 +228,9 @@ const Add = () => {
             </Select>
           </div>
           <div className="flex mt-15">
-            <div className="pt-1 pr-5 mr-15">Location*:-</div>
+            <div className="pt-1 pr-5 mr-15">
+              Location<span className="text-red-600">*</span>:-
+            </div>
             <Select onValueChange={(value) => setlocation(value)}>
               <SelectTrigger className="w-[200px] bg-gray-100 h-10">
                 <SelectValue placeholder="Select machine" />
@@ -233,7 +248,9 @@ const Add = () => {
             </Select>
           </div>
           <div className="flex mt-15">
-            <div className="pt-1  mr-10">Cost-per-day*:-</div>
+            <div className="pt-1  mr-10">
+              Cost-per-day<span className="text-red-600">*</span>:-
+            </div>
             <Input
               type="number"
               placeholder="Enter Amount"
@@ -245,7 +262,9 @@ const Add = () => {
             />
           </div>
           <div className="flex mt-15">
-            <div className="pt-1 pr-10 mr-17">Phone*:-</div>
+            <div className="pt-1 pr-10 mr-17">
+              Phone<span className="text-red-600">*</span>:-
+            </div>
             <Input
               type="text"
               placeholder="Enter Phone Number"
@@ -258,7 +277,9 @@ const Add = () => {
           </div>
         </div>
         <div className="w-2/5 p-5">
-          <div className="font-body text-xl ">*Add img</div>
+          <div className="font-body text-xl ">
+            Add img<span className="text-red-600">*</span>
+          </div>
           <input
             type="file"
             accept="image/*"
