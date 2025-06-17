@@ -29,18 +29,21 @@ const DisplayBuyerPosts = (props) => {
     }
     try {
       const onlyDate = new Date(date).toISOString().split("T")[0];
-      const res = await axios.post("http://localhost:1112/api/request/push", {
-        post_id: data._id,
-        name: props.username,
-        date: onlyDate,
-        req_id: props.user_id,
-        owner_name: data.name,
-        machine: data.machine,
-        location: data.location,
-        costperday: data.costperday,
-        phone: data.phone,
-        image: data.image,
-      });
+      const res = await axios.post(
+        "https://harvesthub-h4eh.onrender.com/api/request/push",
+        {
+          post_id: data._id,
+          name: props.username,
+          date: onlyDate,
+          req_id: props.user_id,
+          owner_name: data.name,
+          machine: data.machine,
+          location: data.location,
+          costperday: data.costperday,
+          phone: data.phone,
+          image: data.image,
+        }
+      );
       alert("Request sent successfully");
     } catch (err) {
       console.log(err);

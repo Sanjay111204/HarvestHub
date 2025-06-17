@@ -24,11 +24,14 @@ const BuyerPage = () => {
     const verify = async () => {
       try {
         console.log(`token:${a}`);
-        const res = await axios.get("http://localhost:1112/api/auth/profile", {
-          headers: { Authorization: `Bearer ${a}` },
-        });
+        const res = await axios.get(
+          "https://harvesthub-h4eh.onrender.com/api/auth/profile",
+          {
+            headers: { Authorization: `Bearer ${a}` },
+          }
+        );
         const res1 = await axios.get(
-          "http://localhost:1112/api/Seller/pullall",
+          "https://harvesthub-h4eh.onrender.com/api/Seller/pullall",
           {}
         );
         setdata(res1.data);

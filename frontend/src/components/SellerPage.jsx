@@ -26,12 +26,18 @@ const SellerPage = () => {
     const verify = async () => {
       try {
         console.log(`token:${a}`);
-        const res = await axios.get("http://localhost:1112/api/auth/profile", {
-          headers: { Authorization: `Bearer ${a}` },
-        });
-        const res1 = await axios.post("http://localhost:1112/api/Seller/pull", {
-          id: b,
-        });
+        const res = await axios.get(
+          "https://harvesthub-h4eh.onrender.com/api/auth/profile",
+          {
+            headers: { Authorization: `Bearer ${a}` },
+          }
+        );
+        const res1 = await axios.post(
+          "https://harvesthub-h4eh.onrender.com/api/Seller/pull",
+          {
+            id: b,
+          }
+        );
         console.log("grand success");
         console.log(res1.data);
         setdata(res1.data);
