@@ -130,7 +130,7 @@ const signpage = () => {
           </div>
           <div className="flex  justify-center ">
             <button
-              className="bg-gray-300 p-3 px-5 rounded-2xl hover:bg-gray-400 cursor-pointer pt-4"
+              className="bg-gray-300 p-3 px-5 rounded-2xl hover:bg-gray-400 cursor-pointer pt-4 font-body"
               onClick={() => {
                 Loginfree();
               }}
