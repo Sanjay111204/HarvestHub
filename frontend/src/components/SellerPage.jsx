@@ -103,7 +103,7 @@ const SellerPage = () => {
         </button>
       </div>
 
-      <div className="min-h-screen justify-center flex gap-6">
+      <div className="min-h-screen justify-center flex-wrap flex gap-6">
         {data &&
           data.map((d) => (
             <div key={d.id}>
