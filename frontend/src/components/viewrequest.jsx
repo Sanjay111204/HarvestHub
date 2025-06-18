@@ -43,17 +43,6 @@ const viewrequest = (props) => {
       <div className="flex p-5 bg-gray-50 align-middle ">
         <img src={logoimg} className="h-15 w-auto mr-3 pl-5"></img>
         <div className="pt-4 font-logo text-2xl">HarvestHub</div>
-        <button
-          className=" flex ml-190 pl-20 pr-20 font-body pt-5 bg-gray-200 rounded-2xl cursor-pointer hover:bg-gray-300 text-xl border-1 border-black"
-          onClick={() => {
-            console.log("hi");
-            navigate("/Seller", { state: loc.state });
-          }}
-        >
-          <span class="material-symbols-outlined pr-1">sync</span>
-          <div className="w-12">Lend</div>
-        </button>
-
         <div className="ml-10 mt-5 font-body underline "></div>
       </div>
       {loading && (
