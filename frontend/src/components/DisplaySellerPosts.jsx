@@ -59,13 +59,13 @@ const DisplaySellerPosts = (props) => {
         </div>
         <div className="flex justify-center">
           <button
-            className="bg-gray-400 h-20 mt-5 px-5 rounded-2xl cursor-pointer hover:bg-green-400"
+            className="bg-gray-400 h-20 mt-5 px-5 rounded-2xl cursor-pointer hover:bg-green-400 border-1 border-black"
             onClick={handleviewRequest}
           >
             View Request
           </button>
           <button
-            className="bg-gray-400 ml-10 h-20 mt-5 px-7 rounded-2xl cursor-pointer hover:bg-red-400"
+            className="bg-gray-400 ml-10 h-20 mt-5 px-7 rounded-2xl cursor-pointer hover:bg-red-400 border-1 border-black"
             onClick={handleDelete}
           >
             Delete Post

@@ -45,21 +45,21 @@ const ResponseCard = (props) => {
       </div>
       {show && (
         <div className="flex justify-center gap-3">
-          <button className="bg-gray-500 py-2 px-13.5 rounded-2xl cursor-pointer">
+          <button className="bg-gray-500 py-2 px-13.5 rounded-2xl cursor-pointer border-1 border-black">
             Waiting
           </button>
         </div>
       )}
       {ref && (
         <div className="flex justify-center gap-3">
-          <button className="bg-green-400 py-2 px-13.5 rounded-2xl cursor-pointer">
+          <button className="bg-green-400 py-2 px-13.5 rounded-2xl cursor-pointer border-1 border-black ">
             Accepted
           </button>
         </div>
       )}
       {temp && (
         <div className="flex justify-center gap-3">
-          <button className="bg-red-400 py-2 px-13.5 rounded-2xl cursor-pointer">
+          <button className="bg-red-400 py-2 px-13.5 rounded-2xl cursor-pointer border-1 border-black">
             Rejected
           </button>
         </div>

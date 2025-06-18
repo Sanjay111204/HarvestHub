@@ -67,13 +67,13 @@ const handlerequest = (props) => {
         {show && (
           <div className="flex justify-center gap-3">
             <button
-              className="bg-green-200 py-2 px-4 rounded-2xl hover:bg-green-400 cursor-pointer"
+              className="bg-green-200 py-2 px-4 rounded-2xl hover:bg-green-400 cursor-pointer border-1 border-black"
               onClick={handleshow}
             >
               Accept
             </button>
             <button
-              className="bg-red-200 py-2 px-4 rounded-2xl hover:bg-red-400 cursor-pointer"
+              className="bg-red-200 py-2 px-4 rounded-2xl hover:bg-red-400 cursor-pointer border-1 border-black"
               onClick={handleref}
             >
               Reject
@@ -82,14 +82,14 @@ const handlerequest = (props) => {
         )}
         {ref && (
           <div className="flex justify-center gap-3">
-            <button className="bg-green-400 py-2 px-13.5 rounded-2xl cursor-pointer">
+            <button className="bg-green-400 py-2 px-13.5 rounded-2xl cursor-pointer border-1 border-black">
               Accepted
             </button>
           </div>
         )}
         {temp && (
           <div className="flex justify-center gap-3">
-            <button className="bg-red-400 py-2 px-13.5 rounded-2xl  cursor-pointer">
+            <button className="bg-red-400 py-2 px-13.5 rounded-2xl  cursor-pointer border-1 border-black">
               Rejected
             </button>
           </div>

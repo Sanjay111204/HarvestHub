@@ -81,7 +81,7 @@ const loginpage = () => {
           {token ? (
             <div className="flex gap-3 ">
               <button
-                className="bg-gray-400 p-2 rounded-xl hover:bg-red-400 cursor-pointer pt-3 ml-30 hover:text-black pb-3 px-3"
+                className="bg-gray-400 p-2 rounded-xl hover:bg-red-400 cursor-pointer pt-3 ml-30  hover:text-black pb-3 px-4 border-1 border-black"
                 onClick={() => {}}
               >
                 {name}

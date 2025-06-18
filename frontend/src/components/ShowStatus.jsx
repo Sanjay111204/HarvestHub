@@ -55,7 +55,7 @@ const ShowStatus = () => {
         <img src={logoimg} className="h-15 w-auto mr-3 pl-5"></img>
         <div className="pt-4 font-logo text-2xl">HarvestHub</div>
         <button
-          className=" flex ml-190 pl-20 pr-20 font-body pt-5 bg-gray-200 rounded-2xl cursor-pointer hover:bg-gray-300 text-xl"
+          className=" flex ml-190 pl-20 pr-20 font-body pt-5 bg-gray-200 rounded-2xl cursor-pointer hover:bg-gray-300 text-xl border-1 border-black"
           onClick={() => {
             console.log("hi");
             navigate("/Seller", { state: loc.state });
@@ -69,7 +69,7 @@ const ShowStatus = () => {
           {token ? (
             <div className="flex ">
               <button
-                className="bg-gray-400 p-2 rounded-xl hover:bg-red-400 cursor-pointer pt-3 ml-25 px-6 hover:text-black pb-3 underline"
+                className="bg-gray-400 p-2 rounded-xl hover:bg-red-400 cursor-pointer pt-3 ml-25 px-6 hover:text-black pb-3 underline border-1 border-black"
                 onClick={() => {
                   navigate("/");
                 }}
@@ -85,7 +85,7 @@ const ShowStatus = () => {
 
       {/* <hr className="border-t border-gray-400 my-1" /> */}
       {loading && (
-        <div className=" flex h-170 justify-center items-center text-2xl font-body ">
+        <div className=" flex h-190 justify-center items-center text-2xl font-body ">
           <div className="">Loading....</div>
         </div>
       )}

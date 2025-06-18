@@ -98,7 +98,7 @@ const signpage = () => {
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               placeholder="Email"
-              className="bg-gray-300 p-3 rounded-md"
+              className="bg-gray-300 p-3 rounded-md border-1 border-black"
             />
           </div>
           <div className="flex p-3 justify-center font-body">
@@ -107,12 +107,12 @@ const signpage = () => {
               onChange={(e) => setPassword(e.target.value)}
               placeholder="Password"
               type="password"
-              className="bg-gray-300 p-3 rounded-md"
+              className="bg-gray-300 p-3 rounded-md border-1 border-black"
             />
           </div>
           <div className="flex p-7 mt-4 justify-center gap-10 font-body">
             <button
-              className="bg-gray-300 p-3 px-8 rounded-2xl hover:bg-gray-400 cursor-pointer pt-4"
+              className="bg-gray-300 p-3 px-8 rounded-2xl hover:bg-gray-400 cursor-pointer pt-4 border-1 border-black"
               onClick={() => {
                 Login();
               }}
@@ -120,7 +120,7 @@ const signpage = () => {
               Login
             </button>
             <button
-              className="bg-gray-300 p-3 px-5 rounded-2xl hover:bg-gray-400 cursor-pointer pt-4 "
+              className="bg-gray-300 p-3 px-5 rounded-2xl hover:bg-gray-400 cursor-pointer pt-4 border-1 border-black"
               onClick={() => {
                 navigate("/register", { state: { x: buyer, y: Seller } });
               }}
@@ -130,7 +130,7 @@ const signpage = () => {
           </div>
           <div className="flex  justify-center ">
             <button
-              className="bg-gray-300 p-3 px-5 rounded-2xl hover:bg-gray-400 cursor-pointer pt-4 font-body"
+              className="bg-gray-300 p-3 px-5 rounded-2xl hover:bg-gray-400 cursor-pointer pt-4 font-body border-1 border-black"
               onClick={() => {
                 Loginfree();
               }}

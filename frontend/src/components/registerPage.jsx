@@ -69,7 +69,7 @@ const registerPage = () => {
               value={name}
               onChange={(e) => setname(e.target.value)}
               placeholder="Name"
-              className="bg-gray-300 p-3 rounded-md"
+              className="bg-gray-300 p-3 rounded-md border-1 border-black"
             />
           </div>
           <div className="flex p-5 justify-center font-body">
@@ -77,7 +77,7 @@ const registerPage = () => {
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               placeholder="Email"
-              className="bg-gray-300 p-3 rounded-md"
+              className="bg-gray-300 p-3 rounded-md border-1 border-black"
             />
           </div>
           <div className="flex p-5 justify-center font-body">
@@ -86,12 +86,12 @@ const registerPage = () => {
               onChange={(e) => setPassword(e.target.value)}
               placeholder="Password"
               type="password"
-              className="bg-gray-300 p-3 rounded-md"
+              className="bg-gray-300 p-3 rounded-md border-1 border-black"
             />
           </div>
           <div className="flex p-7 mt-4 justify-center gap-10 font-body">
             <button
-              className="bg-gray-300 p-3 px-5 rounded-2xl hover:bg-gray-400 cursor-pointer pt-4 "
+              className="bg-gray-300 p-3 px-5 rounded-2xl hover:bg-gray-400 cursor-pointer pt-4 border-1 border-black"
               onClick={() => {
                 handleRegister();
               }}

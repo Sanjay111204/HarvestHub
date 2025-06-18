@@ -184,7 +184,7 @@ const Add = () => {
           {token ? (
             <div className="flex gap-3 ">
               <button
-                className="bg-gray-400 p-2 rounded-xl hover:bg-red-400 cursor-pointer pt-3 ml-30 hover:text-black pb-2 px-5 font-body underline "
+                className="bg-gray-400 p-2 rounded-xl hover:bg-red-400 cursor-pointer pt-3 ml-30 hover:text-black pb-2 px-5 font-body underline border-1 border-black "
                 onClick={() => {
                   navigate("/");
                 }}
@@ -206,7 +206,7 @@ const Add = () => {
             <Input
               type="text"
               placeholder="Enter Name"
-              className="bg-gray-100 w-100 h-10 "
+              className="bg-gray-100 w-100 h-10 border-1 border-black"
               value={ownerName}
               onChange={(e) => {
                 setownerName(e.target.value);
@@ -218,7 +218,7 @@ const Add = () => {
               Machine<span className="text-red-600">*</span>:-
             </div>
             <Select onValueChange={(value) => setMachine(value)}>
-              <SelectTrigger className="w-[200px] bg-gray-100 h-12">
+              <SelectTrigger className="w-[200px] bg-gray-100 h-12 border-1 border-black">
                 <SelectValue placeholder="Select machine" />
               </SelectTrigger>
               <SelectContent>
@@ -238,7 +238,7 @@ const Add = () => {
               Location<span className="text-red-600">*</span>:-
             </div>
             <Select onValueChange={(value) => setlocation(value)}>
-              <SelectTrigger className="w-[200px] bg-gray-100 h-10">
+              <SelectTrigger className="w-[200px] bg-gray-100 h-10 border-1 border-black">
                 <SelectValue placeholder="Select machine" />
               </SelectTrigger>
               <SelectContent>
@@ -260,7 +260,7 @@ const Add = () => {
             <Input
               type="number"
               placeholder="Enter Amount"
-              className="bg-gray-100 w-50 h-10"
+              className="bg-gray-100 w-50 h-10 border-1 border-black"
               value={price}
               onChange={(e) => {
                 setprice(e.target.value);
@@ -274,7 +274,7 @@ const Add = () => {
             <Input
               type="text"
               placeholder="Enter Phone Number"
-              className="bg-gray-100 w-100 h-10 "
+              className="bg-gray-100 w-100 h-10 border-1 border-black"
               value={phno}
               onChange={(e) => {
                 setphno(e.target.value);
@@ -290,13 +290,13 @@ const Add = () => {
             type="file"
             accept="image/*"
             onChange={handleImageChange}
-            className="bg-gray-300 cursor-pointer hover:bg-gray-400 rounded-md mt-8 w-50"
+            className="bg-gray-300 cursor-pointer hover:bg-gray-400 rounded-md mt-8 w-50 border-1 border-black"
           />
         </div>
       </div>
       <div className="flex align-middle justify-center items-center">
         <button
-          className="bg-gray-400 p-3 pl-5 pr-5 rounded-md cursor-pointer hover:bg-green-500"
+          className="bg-gray-400 p-3 pl-5 pr-5 rounded-md cursor-pointer hover:bg-green-500 border-1 border-black"
           onClick={() => {
             handlePost();
           }}

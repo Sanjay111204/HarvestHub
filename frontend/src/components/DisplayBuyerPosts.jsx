@@ -76,7 +76,7 @@ const DisplayBuyerPosts = (props) => {
         <div className="ml-3">Phno </div>
         <div className=" font-extrabold">{data.phone}</div>
       </div>
-      <div className="flex mt-5 w-67 h-10 gap-3 mb-2 ">
+      <div className="flex mt-5 w-67 h-10 gap-3 mb-2 border-1 border-black">
         <Popover>
           <PopoverTrigger asChild>
             <Button
@@ -101,7 +101,7 @@ const DisplayBuyerPosts = (props) => {
           </PopoverContent>
         </Popover>
         <button
-          className="bg-gray-400 h-15 px-2  pt-1 rounded-2xl hover:bg-green-400 cursor-pointer "
+          className="bg-gray-400 h-15 px-2  pt-1 rounded-2xl hover:bg-green-400 cursor-pointer border-1 border-black"
           onClick={handleSendRequest}
         >
           Send Request

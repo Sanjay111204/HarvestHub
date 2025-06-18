@@ -65,7 +65,7 @@ const SellerPage = () => {
         <img src={logoimg} className="h-15 w-auto mr-3 pl-5"></img>
         <div className="pt-4 font-logo text-2xl">HarvestHub</div>
         <button
-          className=" flex ml-190 pl-20 pr-20 font-body pt-5 bg-gray-200 rounded-2xl cursor-pointer hover:bg-gray-300 text-xl"
+          className=" flex ml-190 pl-20 pr-20 font-body pt-5 bg-gray-200 rounded-2xl cursor-pointer hover:bg-gray-300 text-xl border-1 border-black"
           onClick={() => {
             //console.log("hi");
             navigate("/Buyer", { state: loc.state });
@@ -79,7 +79,7 @@ const SellerPage = () => {
           {token ? (
             <div className="flex ">
               <button
-                className="bg-gray-400 p-2 rounded-xl hover:bg-red-400 cursor-pointer pt-3 ml-25 px-5 hover:text-black pb-3 underline"
+                className="bg-gray-400 p-2 rounded-xl hover:bg-red-400 cursor-pointer pt-3 ml-25 px-5 hover:text-black pb-3 underline border-1 border-black"
                 onClick={() => {
                   navigate("/");
                 }}
@@ -95,7 +95,7 @@ const SellerPage = () => {
       <div className="flex text-xl font-body p-4 bg-gray-400 pb-3">
         <div className="pl-166 text-2xl pt-3 font-bold">User Posts</div>
         <button
-          className="ml-110 pl-7 pr-10 pt-1 pb-1  bg-gray-300 rounded-2xl cursor-pointer hover:bg-green-300 text-xl flex "
+          className="ml-110 pl-7 pr-10 pt-1 pb-1  bg-gray-300 rounded-2xl cursor-pointer hover:bg-green-300 text-xl flex border-1 border-black "
           onClick={() => {
             navigate("/Seller/Add", { state: loc.state });
           }}
