@@ -50,7 +50,7 @@ const viewrequest = (props) => {
         <div className="ml-10 mt-5 font-body underline "></div>
       </div>
       {loading && (
-        <div className=" flex h-170 justify-center items-center text-2xl font-body ">
+        <div className=" flex h-170 justify-center items-center text-2xl font-body bg-gray-200 ">
           <div className="">Loading....</div>
         </div>
       )}
