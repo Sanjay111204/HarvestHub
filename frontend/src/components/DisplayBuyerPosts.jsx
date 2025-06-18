@@ -76,13 +76,13 @@ const DisplayBuyerPosts = (props) => {
         <div className="ml-3">Phno </div>
         <div className=" font-extrabold">{data.phone}</div>
       </div>
-      <div className="flex mt-5 w-67 h-10 gap-3 mb-2 border-1 border-black">
+      <div className="flex mt-5 w-67 h-10 gap-3 mb-2 ">
         <Popover>
           <PopoverTrigger asChild>
             <Button
               variant="outline"
               data-empty={!date}
-              className="data-[empty=true]:text-muted-foreground w-[180px] justify-start text-left font-normal mt-2"
+              className="data-[empty=true]:text-muted-foreground w-[180px] justify-start text-left font-normal mt-2 border-1 border-black"
             >
               <CalendarIcon className="mr-2 h-4 w-4" />
               {date ? format(date, "PPP") : <span>Pick a date</span>}

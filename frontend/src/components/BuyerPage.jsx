@@ -97,7 +97,7 @@ const BuyerPage = () => {
 
         <div className="w-1/3 flex">
           <div
-            className="bg-gray-300 pt-3 pb-2 px-3 ml-70 rounded-2xl cursor-pointer hover:bg-green-300  "
+            className="bg-gray-300 pt-3 pb-2 px-3 ml-70 rounded-2xl cursor-pointer hover:bg-green-300  border-1 border-black "
             onClick={handlestatus}
           >
             Request Status
