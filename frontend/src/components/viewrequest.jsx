@@ -3,11 +3,13 @@ import { useLocation, useNavigate } from "react-router-dom";
 import axios from "axios";
 import logoimg from "../assets/logo.png";
 import HR from "./handlerequest";
+import { loadConfigFromFile } from "vite";
 
 const viewrequest = (props) => {
   const [postid, setpostid] = useState("");
   const [data, setdata] = useState([]);
   const [names, setnames] = useState("");
+  const [loading, setloading] = useState(true);
 
   const loc = useLocation();
   const navigate = useNavigate();
@@ -27,6 +29,7 @@ const viewrequest = (props) => {
         );
         console.log(res.data);
         setdata(res.data);
+        setloading(false);
         console.log("Successfully fetched");
       } catch (err) {
         alert(`error due to ${err}`);
@@ -47,16 +50,23 @@ const viewrequest = (props) => {
 
         <div className="ml-10 mt-5 font-body underline "></div>
       </div>
-      <div className="min-h-screen bg-gray-200 font-body">
-        <div className="flex flex-wrap justify-center p-5">
-          {data &&
-            data.map((d) => (
-              <div key={d.id}>
-                <HR datas={d} />
-              </div>
-            ))}
+      {loading && (
+        <div className=" flex h-170 justify-center items-center text-2xl font-body ">
+          <div className="">Loading....</div>
         </div>
-      </div>
+      )}
+      {!loading && (
+        <div className="min-h-screen bg-gray-200 font-body">
+          <div className="flex flex-wrap justify-center p-5">
+            {data &&
+              data.map((d) => (
+                <div key={d.id}>
+                  <HR datas={d} />
+                </div>
+              ))}
+          </div>
+        </div>
+      )}
     </div>
   );
 };

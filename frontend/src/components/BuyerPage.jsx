@@ -15,6 +15,7 @@ const BuyerPage = () => {
   const [userid, setuserid] = useState("");
   const [name, setname] = useState("");
   const [data, setdata] = useState([]);
+  const [loading, setloading] = useState(true);
   const loc = useLocation();
   useEffect(() => {
     const { a, b, c } = loc.state || {};
@@ -35,6 +36,7 @@ const BuyerPage = () => {
           {}
         );
         setdata(res1.data);
+        setloading(false);
         console.log(res1.data);
       } catch (error) {
         console.log(error);
@@ -103,16 +105,27 @@ const BuyerPage = () => {
         </div>
       </div>
       {/* <hr className="border-t border-gray-400 my-1" /> */}
-      <div className=" flex min-h-screen  ">
-        <ul className=" flex flex-wrap justify-center mt-5 ">
-          {data &&
-            data.map((d) => (
-              <li key={d.id}>
-                <DisplayBuyerPosts data={d} username={name} user_id={userid} />
-              </li>
-            ))}
-        </ul>
-      </div>
+      {loading && (
+        <div className=" flex h-170 justify-center items-center text-2xl font-body ">
+          <div className="">Loading....</div>
+        </div>
+      )}
+      {!loading && (
+        <div className=" flex min-h-screen  ">
+          <ul className=" flex flex-wrap justify-center mt-5 ">
+            {data &&
+              data.map((d) => (
+                <li key={d.id}>
+                  <DisplayBuyerPosts
+                    data={d}
+                    username={name}
+                    user_id={userid}
+                  />
+                </li>
+              ))}
+          </ul>
+        </div>
+      )}
     </div>
   );
 };

@@ -16,6 +16,7 @@ const SellerPage = () => {
   const [userid, setuserid] = useState("");
   const [name, setname] = useState("");
   const [data, setdata] = useState([]);
+  const [loading, setloading] = useState(true);
   const loc = useLocation();
   let navigate = useNavigate();
   const { a, b, c } = loc.state || {};
@@ -40,6 +41,7 @@ const SellerPage = () => {
         );
         console.log("grand success");
         console.log(res1.data);
+        setloading(false);
         setdata(res1.data);
       } catch (error) {
         alert(`${error}`);
@@ -102,20 +104,28 @@ const SellerPage = () => {
           <div className="pt-2">ADD</div>
         </button>
       </div>
-
-      <div className="min-h-screen justify-center flex-wrap flex gap-6">
-        {data &&
-          data.map((d) => (
-            <div key={d.id}>
-              <DisplaySellerPosts
-                data={d}
-                onDeleteSuccess={() => {
-                  setdata((prev) => prev.filter((item) => item._id !== d._id));
-                }}
-              />
-            </div>
-          ))}
-      </div>
+      {loading && (
+        <div className=" flex h-170 justify-center items-center text-2xl font-body ">
+          <div className="">Loading....</div>
+        </div>
+      )}
+      {!loading && (
+        <div className="min-h-screen justify-center flex-wrap flex gap-6">
+          {data &&
+            data.map((d) => (
+              <div key={d.id}>
+                <DisplaySellerPosts
+                  data={d}
+                  onDeleteSuccess={() => {
+                    setdata((prev) =>
+                      prev.filter((item) => item._id !== d._id)
+                    );
+                  }}
+                />
+              </div>
+            ))}
+        </div>
+      )}
     </div>
   );
 };
