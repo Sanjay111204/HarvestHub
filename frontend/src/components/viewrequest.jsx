@@ -3,7 +3,6 @@ import { useLocation, useNavigate } from "react-router-dom";
 import axios from "axios";
 import logoimg from "../assets/logo.png";
 import HR from "./handlerequest";
-import { loadConfigFromFile } from "vite";
 
 const viewrequest = (props) => {
   const [postid, setpostid] = useState("");
