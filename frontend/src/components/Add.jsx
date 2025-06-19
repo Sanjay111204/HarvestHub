@@ -158,12 +158,12 @@ const Add = () => {
   ];
 
   return (
-    <div className="bg-gray-100 min-h-screen font-body">
-      {/* Navbar */}
-      <div className="flex justify-between items-center p-4 bg-white shadow-md">
+    <div className="min-h-screen bg-gradient-to-br from-green-50 to-gray-100 text-gray-800 font-sans">
+      {/* Header */}
+      <div className="flex justify-between items-center px-6 py-4 bg-white shadow-sm">
         <div className="flex items-center gap-3">
           <img src={logoimg} alt="Logo" className="h-10" />
-          <h1 className="text-2xl font-logo text-green-700">HarvestHub</h1>
+          <h1 className="text-2xl font-bold text-green-700">HarvestHub</h1>
         </div>
         <button
           onClick={() => navigate("/")}
@@ -174,116 +174,118 @@ const Add = () => {
       </div>
 
       {/* Form */}
-      <div className="max-w-6xl mx-auto mt-10 p-6 bg-white rounded-xl shadow-md grid grid-cols-1 md:grid-cols-2 gap-8">
-        <div className="space-y-6 text-lg">
-          <div>
-            <label>
-              Name<span className="text-red-600">*</span>
-            </label>
-            <Input
-              type="text"
-              placeholder="Enter Name"
-              value={ownerName}
-              onChange={(e) => setownerName(e.target.value)}
-              className="bg-gray-100 mt-1"
-            />
+      <div className="max-w-4xl mx-auto mt-12 p-8 bg-white rounded-2xl shadow-md">
+        <div className="grid md:grid-cols-2 gap-8">
+          <div className="space-y-6 text-lg">
+            <div>
+              <label className="font-medium">
+                Name<span className="text-red-600">*</span>
+              </label>
+              <Input
+                type="text"
+                placeholder="Enter Name"
+                value={ownerName}
+                onChange={(e) => setownerName(e.target.value)}
+                className="bg-gray-100 mt-1"
+              />
+            </div>
+
+            <div>
+              <label className="font-medium">
+                Machine<span className="text-red-600">*</span>
+              </label>
+              <Select onValueChange={(value) => setMachine(value)}>
+                <SelectTrigger className="bg-gray-100 mt-1">
+                  <SelectValue placeholder="Select machine" />
+                </SelectTrigger>
+                <SelectContent>
+                  {machines.map((machine) => (
+                    <SelectItem
+                      key={machine}
+                      value={machine.toLowerCase().replace(/ /g, "_")}
+                    >
+                      {machine}
+                    </SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
+            </div>
+
+            <div>
+              <label className="font-medium">
+                Location<span className="text-red-600">*</span>
+              </label>
+              <Select onValueChange={(value) => setlocation(value)}>
+                <SelectTrigger className="bg-gray-100 mt-1">
+                  <SelectValue placeholder="Select location" />
+                </SelectTrigger>
+                <SelectContent>
+                  {locations.map((loc) => (
+                    <SelectItem
+                      key={loc}
+                      value={loc.toLowerCase().replace(/ /g, "_")}
+                    >
+                      {loc}
+                    </SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
+            </div>
+
+            <div>
+              <label className="font-medium">
+                Cost per Day<span className="text-red-600">*</span>
+              </label>
+              <Input
+                type="number"
+                placeholder="Enter amount"
+                value={price}
+                onChange={(e) => setprice(e.target.value)}
+                className="bg-gray-100 mt-1"
+              />
+            </div>
+
+            <div>
+              <label className="font-medium">
+                Phone Number<span className="text-red-600">*</span>
+              </label>
+              <Input
+                type="text"
+                placeholder="Enter phone number"
+                value={phno}
+                onChange={(e) => setphno(e.target.value)}
+                className="bg-gray-100 mt-1"
+              />
+            </div>
           </div>
 
-          <div>
-            <label>
-              Machine<span className="text-red-600">*</span>
+          <div className="flex flex-col justify-start">
+            <label className="text-lg font-medium mb-2">
+              Add Image<span className="text-red-600">*</span>
             </label>
-            <Select onValueChange={(value) => setMachine(value)}>
-              <SelectTrigger className="bg-gray-100 mt-1">
-                <SelectValue placeholder="Select machine" />
-              </SelectTrigger>
-              <SelectContent>
-                {machines.map((machine) => (
-                  <SelectItem
-                    key={machine}
-                    value={machine.toLowerCase().replace(/ /g, "_")}
-                  >
-                    {machine}
-                  </SelectItem>
-                ))}
-              </SelectContent>
-            </Select>
-          </div>
-
-          <div>
-            <label>
-              Location<span className="text-red-600">*</span>
-            </label>
-            <Select onValueChange={(value) => setlocation(value)}>
-              <SelectTrigger className="bg-gray-100 mt-1">
-                <SelectValue placeholder="Select location" />
-              </SelectTrigger>
-              <SelectContent>
-                {locations.map((loc) => (
-                  <SelectItem
-                    key={loc}
-                    value={loc.toLowerCase().replace(/ /g, "_")}
-                  >
-                    {loc}
-                  </SelectItem>
-                ))}
-              </SelectContent>
-            </Select>
-          </div>
-
-          <div>
-            <label>
-              Cost per Day<span className="text-red-600">*</span>
-            </label>
-            <Input
-              type="number"
-              placeholder="Enter amount"
-              value={price}
-              onChange={(e) => setprice(e.target.value)}
-              className="bg-gray-100 mt-1"
-            />
-          </div>
-
-          <div>
-            <label>
-              Phone Number<span className="text-red-600">*</span>
-            </label>
-            <Input
-              type="text"
-              placeholder="Enter phone number"
-              value={phno}
-              onChange={(e) => setphno(e.target.value)}
-              className="bg-gray-100 mt-1"
+            <input
+              type="file"
+              accept="image/*"
+              onChange={handleImageChange}
+              className="bg-gray-100 p-2 rounded-md border border-gray-300"
             />
           </div>
         </div>
 
-        <div className="flex flex-col justify-start">
-          <label className="text-lg mb-2">
-            Add Image<span className="text-red-600">*</span>
-          </label>
-          <input
-            type="file"
-            accept="image/*"
-            onChange={handleImageChange}
-            className="bg-gray-200 p-2 rounded-md"
-          />
+        <div className="flex justify-center gap-6 mt-10">
+          <button
+            className="bg-gray-200 hover:bg-gray-300 text-black font-medium px-6 py-3 rounded-xl border border-gray-400"
+            onClick={() => navigate("/Seller", { state: loc.state })}
+          >
+            Back
+          </button>
+          <button
+            className="bg-green-600 hover:bg-green-700 text-white font-semibold px-6 py-3 rounded-xl shadow-md"
+            onClick={handlePost}
+          >
+            Post
+          </button>
         </div>
-      </div>
-
-      <div className="flex justify-center mt-8 gap-6">
-        <button
-          className="bg-gray-300 hover:bg-gray-400 text-black font-medium px-6 py-3 rounded-xl shadow-sm"
-          onClick={() => navigate("/Seller", { state: loc.state })}
-        >
-          Back
-        </button>
-        <button
-          className="bg-green-600 hover:bg-green-700 text-white font-semibold px-6 py-3 rounded-xl shadow-md"
-          onClick={handlePost}
-        >
-          Post
-        </button>
       </div>
     </div>
   );
