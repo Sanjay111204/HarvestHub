@@ -44,8 +44,8 @@ const SellerPage = () => {
         setloading(false);
         setdata(res1.data);
       } catch (error) {
-        alert(`${error}`);
-        //navigate("/");
+        alert("login required");
+        navigate("/");
       }
     };
     // const fetch = async () => {
