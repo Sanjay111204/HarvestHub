@@ -22,7 +22,10 @@ const ResponseCard = (props) => {
 
   return (
     <div className="font-body border-1 border-black m-5 p-5 rounded-2xl text-l">
-      <img src={data.image} className="h-40 w-60 m-3" />
+      <img
+        src={data.image}
+        className="h-40 w-60 m-3 border-1 border-black rounded-xl"
+      />
       <div className="flex justify-between w-63">
         <div className="ml-3">OwnerName </div>
         <div className="">{data.name}</div>
