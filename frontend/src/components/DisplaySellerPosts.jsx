@@ -1,76 +1,68 @@
-import React, { useState } from "react";
-import { useEffect } from "react";
-import axios from "axios";
+import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import axios from "axios";
 
-const DisplaySellerPosts = (props) => {
-  const [data, setdata] = useState([]);
+const DisplaySellerPosts = ({ data, onDeleteSuccess }) => {
+  const [post, setPost] = useState(data);
   const navigate = useNavigate();
-  useEffect(() => {
-    setdata(props.data);
-  }, [props]);
-  const handleviewRequest = async () => {
-    navigate("/Seller/view", { state: { id: data._id, name: data.name } });
+
+  const handleViewRequest = () => {
+    navigate("/Seller/view", { state: { id: post._id, name: post.name } });
   };
 
   const handleDelete = async () => {
     try {
-      const res = await axios.post(
+      await axios.post(
         "https://harvesthub-h4eh.onrender.com/api/Seller/remove",
         {
-          id: data._id,
+          id: post._id,
         }
       );
-      alert("successfully deleted");
-      props.onDeleteSuccess();
+      alert("Successfully deleted");
+      onDeleteSuccess();
     } catch (err) {
-      console.log(err);
-      alert("failed too delete");
+      console.error(err);
+      alert("Failed to delete");
     }
   };
+
   return (
-    <div className="flex ">
-      <div className="font-body border-1 border-black m-5 p-5 rounded-2xl text-l bg-gray-300">
-        <div className="flex justify-center">
-          <img
-            src={data.image}
-            className="h-45 w-65 mb-3 rounded-xl border-1 border-black"
-          />
+    <div className="bg-white rounded-xl shadow-md hover:shadow-lg transition w-72 overflow-hidden flex flex-col">
+      <img
+        src={post.image}
+        alt="Machine"
+        className="h-40 w-full object-cover"
+      />
+      <div className="p-4 space-y-1 text-gray-800 text-sm">
+        <div>
+          <span className="font-semibold">Owner:</span> {post.name}
         </div>
-        <div className="flex justify-between w-70">
-          <div className="ml-10">OwnerName </div>
-          <div className="font-bold">{data.name}</div>
+        <div>
+          <span className="font-semibold">Machine:</span> {post.machine}
         </div>
-        <div className="flex justify-between w-70">
-          <div className="ml-10">Machine </div>
-          <div className="font-bold">{data.machine}</div>
+        <div>
+          <span className="font-semibold">Location:</span> {post.location}
         </div>
-        <div className="flex justify-between w-70">
-          <div className="ml-10">Location </div>
-          <div className="font-bold">{data.location}</div>
+        <div>
+          <span className="font-semibold">Cost/Day:</span> ₹{post.costperday}
         </div>
-        <div className="flex justify-between w-70">
-          <div className="ml-10">CostPerDay </div>
-          <div className="font-bold">{data.costperday}</div>
+        <div>
+          <span className="font-semibold">Phone:</span> {post.phone}
         </div>
-        <div className="flex justify-between w-70">
-          <div className="ml-10">Phno </div>
-          <div className="font-bold">{data.phone}</div>
-        </div>
-        <div className="flex justify-center">
-          <button
-            className="bg-gray-400 h-20 mt-5 px-5 rounded-2xl cursor-pointer hover:bg-green-400 border-1 border-black"
-            onClick={handleviewRequest}
-          >
-            View Request
-          </button>
-          <button
-            className="bg-gray-400 ml-10 h-20 mt-5 px-7 rounded-2xl cursor-pointer hover:bg-red-400 border-1 border-black"
-            onClick={handleDelete}
-          >
-            Delete Post
-          </button>
-        </div>
+      </div>
+      <div className="flex justify-around p-4 pt-2">
+        <button
+          onClick={handleViewRequest}
+          className="bg-green-600 hover:bg-green-700 text-white py-1.5 px-4 rounded-md font-medium"
+        >
+          View Requests
+        </button>
+        <button
+          onClick={handleDelete}
+          className="bg-red-500 hover:bg-red-600 text-white py-1.5 px-4 rounded-md font-medium"
+        >
+          Delete
+        </button>
       </div>
     </div>
   );

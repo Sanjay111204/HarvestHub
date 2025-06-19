@@ -1,21 +1,8 @@
-import React from "react";
-import { SignedIn, SignedOut, RedirectToSignIn } from "@clerk/clerk-react";
+import React, { useState, useEffect } from "react";
+import { useNavigate, useLocation } from "react-router-dom";
 import logoimg from "../assets/logo.png";
-import { SignInButton, SignIn, UserButton } from "@clerk/clerk-react";
-import { useClerk, useUser } from "@clerk/clerk-react";
-import { fetchUsers } from "@/hook/example";
-import { useEffect } from "react";
-import {
-  Link,
-  Navigate,
-  NavLink,
-  useLocation,
-  useNavigate,
-} from "react-router-dom";
-import { useState } from "react";
 import { Input } from "./ui/input";
-import supabase from "@/utils/supabase";
-
+import axios from "axios";
 import {
   Select,
   SelectContent,
@@ -23,10 +10,12 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import axios from "axios";
 
 const Add = () => {
-  let navigate = useNavigate();
+  const navigate = useNavigate();
+  const loc = useLocation();
+  const { a, b, c } = loc.state || {};
+
   const [Machine, setMachine] = useState("");
   const [ownerName, setownerName] = useState("");
   const [price, setprice] = useState(0);
@@ -36,16 +25,14 @@ const Add = () => {
   const [token, settoken] = useState("");
   const [userid, setuserid] = useState("");
   const [name, setname] = useState("");
-  const loc = useLocation();
-  const { a, b, c } = loc.state || {};
+
   useEffect(() => {
     settoken(a);
     setuserid(b);
     setname(c);
     const verify = async () => {
       try {
-        console.log(`token:${a}`);
-        const res = await axios.get(
+        await axios.get(
           "https://harvesthub-h4eh.onrender.com/api/auth/profile",
           {
             headers: { Authorization: `Bearer ${a}` },
@@ -59,41 +46,35 @@ const Add = () => {
     verify();
   }, [a, b, c]);
 
-  const handleImageChange = async (e) => {
+  const handleImageChange = (e) => {
     const file = e.target.files[0];
     const reader = new FileReader();
-    reader.onloadend = () => {
-      setimagefile(reader.result); // base64 string
-    };
+    reader.onloadend = () => setimagefile(reader.result);
     reader.readAsDataURL(file);
   };
 
-  async function handlePost() {
+  const handlePost = async () => {
     if (!Machine || !ownerName || !phno || !location || !price || !imagefile) {
       alert("Please fill all the * marked values");
       return;
-    } else {
-      try {
-        const res = await axios.post(
-          "https://harvesthub-h4eh.onrender.com/api/Seller/push",
-          {
-            user_id: userid,
-            name: ownerName,
-            machine: Machine,
-            location,
-            costperday: price,
-            phone: phno,
-            image64bit: imagefile,
-          }
-        );
-        alert("successfully Posted");
-        navigate("/Seller", { state: loc.state });
-      } catch (err) {
-        alert(`problem due to ${err}`);
-        console.log(err);
-      }
     }
-  }
+    try {
+      await axios.post("https://harvesthub-h4eh.onrender.com/api/Seller/push", {
+        user_id: userid,
+        name: ownerName,
+        machine: Machine,
+        location,
+        costperday: price,
+        phone: phno,
+        image64bit: imagefile,
+      });
+      alert("Successfully Posted");
+      navigate("/Seller", { state: loc.state });
+    } catch (err) {
+      alert(`Problem due to ${err}`);
+    }
+  };
+
   const machines = [
     "Tractor",
     "Plough",
@@ -111,6 +92,7 @@ const Add = () => {
     "Reaper",
     "Mulcher",
   ];
+
   const locations = [
     "Agartala",
     "Ahmedabad",
@@ -176,49 +158,43 @@ const Add = () => {
   ];
 
   return (
-    <div className=" bg-gray-200 min-h-screen">
-      <div className="flex p-5 bg-gray-50 align-middle ">
-        <img src={logoimg} className="h-15 w-auto mr-3 pl-5"></img>
-        <div className="pt-4 font-logo text-2xl">HarvestHub</div>
-        <div className="ml-240 mt-5 ">
-          {token ? (
-            <div className="flex gap-3 ">
-              <button
-                className="bg-gray-400 p-2 rounded-xl hover:bg-red-400 cursor-pointer pt-3 ml-30 hover:text-black pb-2 px-5 font-body underline border-1 border-black "
-                onClick={() => {
-                  navigate("/");
-                }}
-              >
-                {name}
-              </button>
-            </div>
-          ) : (
-            <p className="underline ml-40">Sign_in</p>
-          )}
+    <div className="bg-gray-100 min-h-screen font-body">
+      {/* Navbar */}
+      <div className="flex justify-between items-center p-4 bg-white shadow-md">
+        <div className="flex items-center gap-3">
+          <img src={logoimg} alt="Logo" className="h-10" />
+          <h1 className="text-2xl font-logo text-green-700">HarvestHub</h1>
         </div>
+        <button
+          onClick={() => navigate("/")}
+          className="bg-red-100 hover:bg-red-200 px-4 py-2 rounded-lg font-semibold text-red-700"
+        >
+          {name || "Sign In"}
+        </button>
       </div>
-      <div className="w-screen flex flex-row ">
-        <div className="w-3/5 p-16 text-2xl font-body">
-          <div className="flex">
-            <div className="pt-1 pr-11 mr-17">
-              Name<span className="text-red-600">*</span>:-
-            </div>
+
+      {/* Form */}
+      <div className="max-w-6xl mx-auto mt-10 p-6 bg-white rounded-xl shadow-md grid grid-cols-1 md:grid-cols-2 gap-8">
+        <div className="space-y-6 text-lg">
+          <div>
+            <label>
+              Name<span className="text-red-600">*</span>
+            </label>
             <Input
               type="text"
               placeholder="Enter Name"
-              className="bg-gray-100 w-100 h-10 border-1 border-black"
               value={ownerName}
-              onChange={(e) => {
-                setownerName(e.target.value);
-              }}
+              onChange={(e) => setownerName(e.target.value)}
+              className="bg-gray-100 mt-1"
             />
           </div>
-          <div className="flex pt-15">
-            <div className="pt-1 pr-5 mr-15">
-              Machine<span className="text-red-600">*</span>:-
-            </div>
+
+          <div>
+            <label>
+              Machine<span className="text-red-600">*</span>
+            </label>
             <Select onValueChange={(value) => setMachine(value)}>
-              <SelectTrigger className="w-[200px] bg-gray-100 h-12 border-1 border-black">
+              <SelectTrigger className="bg-gray-100 mt-1">
                 <SelectValue placeholder="Select machine" />
               </SelectTrigger>
               <SelectContent>
@@ -233,13 +209,14 @@ const Add = () => {
               </SelectContent>
             </Select>
           </div>
-          <div className="flex mt-15">
-            <div className="pt-1 pr-5 mr-15">
-              Location<span className="text-red-600">*</span>:-
-            </div>
+
+          <div>
+            <label>
+              Location<span className="text-red-600">*</span>
+            </label>
             <Select onValueChange={(value) => setlocation(value)}>
-              <SelectTrigger className="w-[200px] bg-gray-100 h-10 border-1 border-black">
-                <SelectValue placeholder="Select machine" />
+              <SelectTrigger className="bg-gray-100 mt-1">
+                <SelectValue placeholder="Select location" />
               </SelectTrigger>
               <SelectContent>
                 {locations.map((loc) => (
@@ -253,53 +230,57 @@ const Add = () => {
               </SelectContent>
             </Select>
           </div>
-          <div className="flex mt-15">
-            <div className="pt-1  mr-10">
-              Cost-per-day<span className="text-red-600">*</span>:-
-            </div>
+
+          <div>
+            <label>
+              Cost per Day<span className="text-red-600">*</span>
+            </label>
             <Input
               type="number"
-              placeholder="Enter Amount"
-              className="bg-gray-100 w-50 h-10 border-1 border-black"
+              placeholder="Enter amount"
               value={price}
-              onChange={(e) => {
-                setprice(e.target.value);
-              }}
+              onChange={(e) => setprice(e.target.value)}
+              className="bg-gray-100 mt-1"
             />
           </div>
-          <div className="flex mt-15">
-            <div className="pt-1 pr-10 mr-17">
-              Phone<span className="text-red-600">*</span>:-
-            </div>
+
+          <div>
+            <label>
+              Phone Number<span className="text-red-600">*</span>
+            </label>
             <Input
               type="text"
-              placeholder="Enter Phone Number"
-              className="bg-gray-100 w-100 h-10 border-1 border-black"
+              placeholder="Enter phone number"
               value={phno}
-              onChange={(e) => {
-                setphno(e.target.value);
-              }}
+              onChange={(e) => setphno(e.target.value)}
+              className="bg-gray-100 mt-1"
             />
           </div>
         </div>
-        <div className="w-2/5 p-5">
-          <div className="font-body text-xl ">
-            Add img<span className="text-red-600">*</span>
-          </div>
+
+        <div className="flex flex-col justify-start">
+          <label className="text-lg mb-2">
+            Add Image<span className="text-red-600">*</span>
+          </label>
           <input
             type="file"
             accept="image/*"
             onChange={handleImageChange}
-            className="bg-gray-300 cursor-pointer hover:bg-gray-400 rounded-md mt-8 w-50 border-1 border-black"
+            className="bg-gray-200 p-2 rounded-md"
           />
         </div>
       </div>
-      <div className="flex align-middle justify-center items-center">
+
+      <div className="flex justify-center mt-8 gap-6">
         <button
-          className="bg-gray-400 p-3 pl-5 pr-5 rounded-md cursor-pointer hover:bg-green-500 border-1 border-black"
-          onClick={() => {
-            handlePost();
-          }}
+          className="bg-gray-300 hover:bg-gray-400 text-black font-medium px-6 py-3 rounded-xl shadow-sm"
+          onClick={() => navigate("/Seller", { state: loc.state })}
+        >
+          Back
+        </button>
+        <button
+          className="bg-green-600 hover:bg-green-700 text-white font-semibold px-6 py-3 rounded-xl shadow-md"
+          onClick={handlePost}
         >
           Post
         </button>

@@ -1,10 +1,8 @@
-import React from "react";
-
+import React, { useState, useEffect } from "react";
 import logoimg from "../assets/logo.png";
 import axios from "axios";
-import { useState } from "react";
-import { useEffect } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
+
 const registerPage = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -15,6 +13,7 @@ const registerPage = () => {
   const [Seller, setSeller] = useState(false);
   const loc = useLocation();
   const navigate = useNavigate();
+
   useEffect(() => {
     const { x, y } = loc.state || {};
     if (x) setbuyer(true);
@@ -36,8 +35,6 @@ const registerPage = () => {
         }
       );
       alert("Successfully registered");
-      console.log(res.data.token);
-      console.log(res.data.user.id);
       settoken(res.data.token);
       setuserId(res.data.user.id);
       const temp = {
@@ -45,62 +42,87 @@ const registerPage = () => {
         b: res.data.user.id,
         c: res.data.user.name,
       };
-      if (buyer) {
-        navigate("/Buyer", { state: temp });
-      } else if (Seller) navigate("/Seller", { state: temp });
+      if (buyer) navigate("/Buyer", { state: temp });
+      else if (Seller) navigate("/Seller", { state: temp });
       else navigate("/", { state: temp });
     } catch (error) {
-      alert("user already exsist");
-      console.log(error);
+      alert("User already exists");
+      console.error(error);
     }
   };
+
   return (
-    <div>
-      <div className="bg-gray-200 font-body">
-        <div className="flex p-5 bg-gray-50 align-middle ">
-          <img src={logoimg} className="h-15 w-auto mr-3 pl-5"></img>
-          <div className="pt-4 font-logo text-2xl">HarvestHub</div>
+    <div className="min-h-screen bg-gradient-to-br from-green-50 to-gray-100 text-gray-800 font-sans">
+      {/* Header */}
+      <header className="flex justify-between items-center px-6 py-4 bg-white shadow-sm">
+        <div className="flex items-center">
+          <img src={logoimg} alt="Logo" className="h-10 w-auto mr-3" />
+          <h1 className="text-2xl font-bold text-green-700">HarvestHub</h1>
         </div>
-      </div>
-      <div className="min-h-screen bg-gray-200 flex justify-center align-middle items-center">
-        <div className="bg-gray-100 w-100 h-120 rounded-2xl ">
-          <div className="flex p-5 mt-10 justify-center font-body">
+      </header>
+
+      {/* Form Section */}
+      <main className="flex justify-center items-center min-h-[calc(100vh-80px)] px-4">
+        <div className="bg-white shadow-lg rounded-2xl p-8 w-full max-w-md relative">
+          {/* Back Button */}
+          <button
+            onClick={() => navigate("/sign")}
+            className="absolute left-4 top-4 text-sm text-green-700 hover:text-green-900 underline"
+          >
+            ← Back
+          </button>
+
+          <h2 className="text-2xl font-semibold text-center mb-6 text-green-700 mt-4">
+            Create an Account
+          </h2>
+
+          <div className="mb-4 text-left">
+            <label className="block text-sm font-medium text-gray-700 mb-1">
+              Name
+            </label>
             <input
               value={name}
               onChange={(e) => setname(e.target.value)}
-              placeholder="Name"
-              className="bg-gray-300 p-3 rounded-md border-1 border-black"
+              placeholder="Your full name"
+              className="w-full px-4 py-3 rounded-md bg-gray-100 focus:outline-none focus:ring-2 focus:ring-green-400"
             />
           </div>
-          <div className="flex p-5 justify-center font-body">
+
+          <div className="mb-4 text-left">
+            <label className="block text-sm font-medium text-gray-700 mb-1">
+              Email
+            </label>
             <input
               value={email}
               onChange={(e) => setEmail(e.target.value)}
-              placeholder="Email"
-              className="bg-gray-300 p-3 rounded-md border-1 border-black"
+              placeholder="Your email address"
+              className="w-full px-4 py-3 rounded-md bg-gray-100 focus:outline-none focus:ring-2 focus:ring-green-400"
             />
           </div>
-          <div className="flex p-5 justify-center font-body">
+
+          <div className="mb-6 text-left">
+            <label className="block text-sm font-medium text-gray-700 mb-1">
+              Password
+            </label>
             <input
               value={password}
               onChange={(e) => setPassword(e.target.value)}
-              placeholder="Password"
               type="password"
-              className="bg-gray-300 p-3 rounded-md border-1 border-black"
+              placeholder="Choose a secure password"
+              className="w-full px-4 py-3 rounded-md bg-gray-100 focus:outline-none focus:ring-2 focus:ring-green-400"
             />
           </div>
-          <div className="flex p-7 mt-4 justify-center gap-10 font-body">
+
+          <div className="flex justify-center">
             <button
-              className="bg-gray-300 p-3 px-5 rounded-2xl hover:bg-gray-400 cursor-pointer pt-4 border-1 border-black"
-              onClick={() => {
-                handleRegister();
-              }}
+              onClick={handleRegister}
+              className="w-full bg-green-600 text-white py-3 rounded-xl hover:bg-green-700 transition"
             >
               Register
             </button>
           </div>
         </div>
-      </div>
+      </main>
     </div>
   );
 };

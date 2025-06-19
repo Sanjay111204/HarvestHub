@@ -1,31 +1,28 @@
 import axios from "axios";
-import React, { useEffect } from "react";
-import { useState } from "react";
+import React, { useEffect, useState } from "react";
 
-const handlerequest = (props) => {
-  const [show, setshow] = useState(true);
-  const [ref, setref] = useState(false);
-  const [temp, settemp] = useState(false);
-  const [data, setdata] = useState([]);
+const HandleRequest = (props) => {
+  const [show, setShow] = useState(true);
+  const [accepted, setAccepted] = useState(false);
+  const [rejected, setRejected] = useState(false);
+  const [data, setData] = useState([]);
+
   useEffect(() => {
-    setdata(props.datas);
+    setData(props.datas);
     if (props.datas.status === 1) {
-      setshow(false);
-      setref(true);
-      settemp(false);
+      setShow(false);
+      setAccepted(true);
     } else if (props.datas.status === 2) {
-      setshow(false);
-      setref(false);
-      settemp(true);
+      setShow(false);
+      setRejected(true);
     }
   }, [props]);
 
-  const handleshow = async () => {
-    setshow(false);
-    setref(true);
-    settemp(false);
+  const handleAccept = async () => {
+    setShow(false);
+    setAccepted(true);
     try {
-      const res = await axios.post(
+      await axios.post(
         "https://harvesthub-h4eh.onrender.com/api/request/update",
         {
           id: data._id,
@@ -33,16 +30,16 @@ const handlerequest = (props) => {
         }
       );
     } catch (err) {
-      console.log(err);
-      alert(`error due to ${err}`);
+      console.error(err);
+      alert(`Error: ${err}`);
     }
   };
-  const handleref = async () => {
-    setshow(false);
-    setref(false);
-    settemp(true);
+
+  const handleReject = async () => {
+    setShow(false);
+    setRejected(true);
     try {
-      const res = await axios.post(
+      await axios.post(
         "https://harvesthub-h4eh.onrender.com/api/request/update",
         {
           id: data._id,
@@ -50,53 +47,57 @@ const handlerequest = (props) => {
         }
       );
     } catch (err) {
-      console.log(err);
-      alert(`error due to ${err}`);
+      console.error(err);
+      alert(`Error: ${err}`);
     }
   };
 
   return (
-    <div>
-      <div className="m-5 border-1 border-black p-6 rounded-xl ">
-        <div className="flex justify-center">
-          <div className="pb-3">{data.name}</div>
-        </div>
-        <div className="flex justify-center">
-          <div className="pb-3">{data.date}</div>
-        </div>
-        {show && (
-          <div className="flex justify-center gap-3">
-            <button
-              className="bg-green-200 py-2 px-4 rounded-2xl hover:bg-green-400 cursor-pointer border-1 border-black"
-              onClick={handleshow}
-            >
-              Accept
-            </button>
-            <button
-              className="bg-red-200 py-2 px-4 rounded-2xl hover:bg-red-400 cursor-pointer border-1 border-black"
-              onClick={handleref}
-            >
-              Reject
-            </button>
-          </div>
-        )}
-        {ref && (
-          <div className="flex justify-center gap-3">
-            <button className="bg-green-400 py-2 px-13.5 rounded-2xl cursor-pointer border-1 border-black">
-              Accepted
-            </button>
-          </div>
-        )}
-        {temp && (
-          <div className="flex justify-center gap-3">
-            <button className="bg-red-400 py-2 px-13.5 rounded-2xl  cursor-pointer border-1 border-black">
-              Rejected
-            </button>
-          </div>
-        )}
+    <div className="w-full max-w-md p-6 m-4 bg-white border border-gray-300 rounded-2xl shadow-sm font-body">
+      <div className="text-center mb-3">
+        <p className="text-xl font-semibold text-green-800">{data.name}</p>
+        <p className="text-gray-600">
+          Requested Date:{" "}
+          <span className="font-medium text-black">
+            {data.date?.split("T")[0]}
+          </span>
+        </p>
       </div>
+
+      {show && (
+        <div className="flex justify-center gap-4 mt-4">
+          <button
+            onClick={handleAccept}
+            className="bg-green-500 hover:bg-green-600 text-white py-2 px-6 rounded-xl"
+          >
+            Accept
+          </button>
+          <button
+            onClick={handleReject}
+            className="bg-red-500 hover:bg-red-600 text-white py-2 px-6 rounded-xl"
+          >
+            Reject
+          </button>
+        </div>
+      )}
+
+      {accepted && (
+        <div className="flex justify-center mt-4">
+          <span className="bg-green-100 text-green-800 font-semibold px-6 py-2 rounded-xl">
+            Accepted
+          </span>
+        </div>
+      )}
+
+      {rejected && (
+        <div className="flex justify-center mt-4">
+          <span className="bg-red-100 text-red-800 font-semibold px-6 py-2 rounded-xl">
+            Rejected
+          </span>
+        </div>
+      )}
     </div>
   );
 };
 
-export default handlerequest;
+export default HandleRequest;

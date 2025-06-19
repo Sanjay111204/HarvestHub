@@ -1,9 +1,7 @@
-import React, { useLayoutEffect } from "react";
+import React, { useEffect, useState } from "react";
 import logoimg from "../assets/logo.png";
 import axios from "axios";
-import { useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
-import { useEffect } from "react";
 
 const signpage = () => {
   const [email, setEmail] = useState("");
@@ -14,6 +12,7 @@ const signpage = () => {
   const [Seller, setSeller] = useState(false);
   const navigate = useNavigate();
   const loc = useLocation();
+
   useEffect(() => {
     const { x, y } = loc.state || {};
     if (x) setbuyer(true);
@@ -26,7 +25,6 @@ const signpage = () => {
       return;
     }
     try {
-      console.log(email, password);
       const res = await axios.post(
         "https://harvesthub-h4eh.onrender.com/api/auth/login",
         {
@@ -35,9 +33,6 @@ const signpage = () => {
         }
       );
       alert("Login successful!");
-      // You can store the token or redirect from here if needed
-      console.log(res.data.token);
-      console.log(res.data.user.id);
       settoken(res.data.token);
       setuserId(res.data.user.id);
       const temp = {
@@ -45,15 +40,15 @@ const signpage = () => {
         b: res.data.user.id,
         c: res.data.user.name,
       };
-      if (buyer) {
-        navigate("/Buyer", { state: temp });
-      } else if (Seller) navigate("/Seller", { state: temp });
+      if (buyer) navigate("/Buyer", { state: temp });
+      else if (Seller) navigate("/Seller", { state: temp });
       else navigate("/", { state: temp });
     } catch (error) {
       console.error("Login failed:", error);
       alert("Login failed. Please check your credentials or server status.");
     }
   };
+
   const Loginfree = async () => {
     try {
       const res = await axios.post(
@@ -64,9 +59,6 @@ const signpage = () => {
         }
       );
       alert("Login successful!");
-      // You can store the token or redirect from here if needed
-      console.log(res.data.token);
-      console.log(res.data.user.id);
       settoken(res.data.token);
       setuserId(res.data.user.id);
       const temp = {
@@ -74,72 +66,83 @@ const signpage = () => {
         b: res.data.user.id,
         c: res.data.user.name,
       };
-      if (buyer) {
-        navigate("/Buyer", { state: temp });
-      } else if (Seller) navigate("/Seller", { state: temp });
+      if (buyer) navigate("/Buyer", { state: temp });
+      else if (Seller) navigate("/Seller", { state: temp });
       else navigate("/", { state: temp });
     } catch (error) {
       console.error("Login failed:", error);
       alert("Login failed. Please check your credentials or server status.");
     }
   };
+
   return (
-    <div>
-      <div className="bg-gray-200 font-body">
-        <div className="flex p-5 bg-gray-50 align-middle ">
-          <img src={logoimg} className="h-15 w-auto mr-3 pl-5"></img>
-          <div className="pt-4 font-logo text-2xl">HarvestHub</div>
+    <div className="min-h-screen bg-gradient-to-br from-green-50 to-gray-100 text-gray-800 font-sans">
+      {/* Header */}
+      <header className="flex justify-between items-center px-6 py-4 bg-white shadow-sm">
+        <div className="flex items-center">
+          <img src={logoimg} alt="Logo" className="h-10 w-auto mr-3" />
+          <h1 className="text-2xl font-bold text-green-700">HarvestHub</h1>
         </div>
-      </div>
-      <div className="min-h-screen bg-gray-200 flex justify-center align-middle items-center">
-        <div className="bg-gray-100 w-100 h-115 rounded-2xl ">
-          <div className="flex p-10 mt-6 justify-center font-body">
+      </header>
+
+      {/* Form Section */}
+      <main className="flex justify-center items-center min-h-[calc(100vh-80px)] px-4">
+        <div className="bg-white shadow-lg rounded-2xl p-8 w-full max-w-md">
+          <h2 className="text-2xl font-semibold text-center mb-6 text-green-700">
+            Sign In
+          </h2>
+
+          <div className="mb-4 text-left">
+            <label className="block text-sm font-medium text-gray-700 mb-1">
+              Email
+            </label>
             <input
               value={email}
               onChange={(e) => setEmail(e.target.value)}
-              placeholder="Email"
-              className="bg-gray-300 p-3 rounded-md border-1 border-black"
+              placeholder="Enter your email"
+              className="w-full px-4 py-3 rounded-md bg-gray-100 focus:outline-none focus:ring-2 focus:ring-green-400"
             />
           </div>
-          <div className="flex p-3 justify-center font-body">
+          <div className="mb-6 text-left">
+            <label className="block text-sm font-medium text-gray-700 mb-1">
+              Password
+            </label>
             <input
               value={password}
               onChange={(e) => setPassword(e.target.value)}
-              placeholder="Password"
               type="password"
-              className="bg-gray-300 p-3 rounded-md border-1 border-black"
+              placeholder="Enter your password"
+              className="w-full px-4 py-3 rounded-md bg-gray-100 focus:outline-none focus:ring-2 focus:ring-green-400"
             />
           </div>
-          <div className="flex p-7 mt-4 justify-center gap-10 font-body">
+
+          <div className="flex flex-col sm:flex-row justify-between gap-4 mb-4">
             <button
-              className="bg-gray-300 p-3 px-8 rounded-2xl hover:bg-gray-400 cursor-pointer pt-4 border-1 border-black"
-              onClick={() => {
-                Login();
-              }}
+              onClick={Login}
+              className="w-full bg-green-600 text-white py-3 rounded-xl hover:bg-green-700 transition"
             >
               Login
             </button>
             <button
-              className="bg-gray-300 p-3 px-5 rounded-2xl hover:bg-gray-400 cursor-pointer pt-4 border-1 border-black"
-              onClick={() => {
-                navigate("/register", { state: { x: buyer, y: Seller } });
-              }}
+              onClick={() =>
+                navigate("/register", { state: { x: buyer, y: Seller } })
+              }
+              className="w-full bg-white border border-green-600 text-green-700 py-3 rounded-xl hover:bg-green-50 transition"
             >
               Register
             </button>
           </div>
-          <div className="flex  justify-center ">
+
+          <div className="mt-4 text-center">
             <button
-              className="bg-gray-300 p-3 px-5 rounded-2xl hover:bg-gray-400 cursor-pointer pt-4 font-body border-1 border-black"
-              onClick={() => {
-                Loginfree();
-              }}
+              onClick={Loginfree}
+              className="text-sm text-gray-600 underline hover:text-green-600 transition"
             >
-              Try without Login
+              Continue as Guest
             </button>
           </div>
         </div>
-      </div>
+      </main>
     </div>
   );
 };

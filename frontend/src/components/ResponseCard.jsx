@@ -1,72 +1,58 @@
 import React, { useState, useEffect } from "react";
 
-const ResponseCard = (props) => {
-  const [data, setdata] = useState([]);
-  const [status, setstatus] = useState(0);
-  const [show, setshow] = useState(true);
-  const [ref, setref] = useState(false);
-  const [temp, settemp] = useState(false);
+const ResponseCard = ({ data }) => {
+  const [status, setStatus] = useState("Waiting");
+
   useEffect(() => {
-    setdata(props.data);
-    setstatus(data.status);
-    if (props.data.status === 1) {
-      setshow(false);
-      setref(true);
-      settemp(false);
-    } else if (props.data.status === 2) {
-      setshow(false);
-      setref(false);
-      settemp(true);
+    if (data?.status === 1) {
+      setStatus("Accepted");
+    } else if (data?.status === 2) {
+      setStatus("Rejected");
+    } else {
+      setStatus("Waiting");
     }
-  }, [props]);
+  }, [data]);
+
+  const statusColor = {
+    Accepted: "bg-green-600",
+    Rejected: "bg-red-500",
+    Waiting: "bg-yellow-400",
+  };
 
   return (
-    <div className="font-body border-1 border-black m-5 p-5 rounded-2xl text-l">
+    <div className="bg-white shadow-md hover:shadow-lg transition rounded-xl overflow-hidden flex flex-col w-72">
       <img
         src={data.image}
-        className="h-40 w-60 m-3 border-1 border-black rounded-xl"
+        alt="Machine"
+        className="h-40 w-full object-cover"
       />
-      <div className="flex justify-between w-63">
-        <div className="ml-3">OwnerName </div>
-        <div className="">{data.name}</div>
-      </div>
-      <div className="flex justify-between w-63">
-        <div className="ml-3">Machine </div>
-        <div className="">{data.machine}</div>
-      </div>
-      <div className="flex justify-between w-63">
-        <div className="ml-3">Location </div>
-        <div className="">{data.location}</div>
-      </div>
-      <div className="flex justify-between w-63">
-        <div className="ml-3">CostPerDay </div>
-        <div className="">{data.costperday}</div>
-      </div>
-      <div className="flex justify-between w-63">
-        <div className="ml-3">Phno </div>
-        <div className="">{data.phone}</div>
-      </div>
-      {show && (
-        <div className="flex justify-center gap-3">
-          <button className="bg-gray-500 py-2 px-13.5 rounded-2xl cursor-pointer border-1 border-black">
-            Waiting
-          </button>
+      <div className="p-4 space-y-1 text-gray-800 text-sm">
+        <div>
+          <span className="font-semibold">Owner:</span> {data.name}
         </div>
-      )}
-      {ref && (
-        <div className="flex justify-center gap-3">
-          <button className="bg-green-400 py-2 px-13.5 rounded-2xl cursor-pointer border-1 border-black ">
-            Accepted
-          </button>
+        <div>
+          <span className="font-semibold">Machine:</span> {data.machine}
         </div>
-      )}
-      {temp && (
-        <div className="flex justify-center gap-3">
-          <button className="bg-red-400 py-2 px-13.5 rounded-2xl cursor-pointer border-1 border-black">
-            Rejected
-          </button>
+        <div>
+          <span className="font-semibold">Location:</span> {data.location}
         </div>
-      )}
+        <div>
+          <span className="font-semibold">Cost/Day:</span> ₹{data.costperday}
+        </div>
+        <div>
+          <span className="font-semibold">Phone:</span> {data.phone}
+        </div>
+        <div>
+          <span className="font-semibold">Date:</span> {data.date}
+        </div>
+      </div>
+      <div className="p-4 pt-2">
+        <div
+          className={`text-white px-4 py-2 rounded-md text-center font-semibold ${statusColor[status]}`}
+        >
+          {status}
+        </div>
+      </div>
     </div>
   );
 };

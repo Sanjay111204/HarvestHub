@@ -1,9 +1,8 @@
-"use client";
-
+import React, { useEffect, useState } from "react";
 import { format } from "date-fns";
-import { Calendar as CalendarIcon, Weight } from "lucide-react";
+import { Calendar as CalendarIcon } from "lucide-react";
+import axios from "axios";
 
-import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
 import { Calendar } from "@/components/ui/calendar";
 import {
@@ -11,31 +10,26 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from "@/components/ui/popover";
-import React, { useState } from "react";
-import { useEffect } from "react";
-import axios from "axios";
 
-const DisplayBuyerPosts = (props) => {
-  const [data, setdata] = useState([]);
-  const [date, setDate] = useState();
-  useEffect(() => {
-    setdata(props.data);
-  }, [props]);
+const DisplayBuyerPosts = ({ data, username, user_id }) => {
+  const [date, setDate] = useState(null);
 
   const handleSendRequest = async () => {
     if (!date) {
-      alert("Cant send request without filling date");
+      alert("Please select a date before sending the request.");
       return;
     }
+
+    const onlyDate = new Date(date).toISOString().split("T")[0];
+
     try {
-      const onlyDate = new Date(date).toISOString().split("T")[0];
-      const res = await axios.post(
+      await axios.post(
         "https://harvesthub-h4eh.onrender.com/api/request/push",
         {
           post_id: data._id,
-          name: props.username,
+          name: username,
           date: onlyDate,
-          req_id: props.user_id,
+          req_id: user_id,
           owner_name: data.name,
           machine: data.machine,
           location: data.location,
@@ -44,68 +38,70 @@ const DisplayBuyerPosts = (props) => {
           image: data.image,
         }
       );
-      alert("Request sent successfully");
+      alert("Request sent successfully!");
     } catch (err) {
-      console.log(err);
-      alert(`error due to ${err}`);
+      console.error(err);
+      alert("Error sending request. Please try again.");
     }
   };
+
   return (
-    <div className="font-body border-1 border-black m-5 p-5 rounded-2xl text-l bg-gray-300">
+    <div className="bg-white shadow-md hover:shadow-lg transition rounded-xl overflow-hidden flex flex-col">
       <img
         src={data.image}
-        className="h-40 w-60 m-3 rounded-xl border-1 border-black"
+        alt="Machine"
+        className="h-40 w-full object-cover"
       />
-      <div className="flex justify-between w-63">
-        <div className="ml-3">OwnerName </div>
-        <div className="font-extrabold">{data.name}</div>
+      <div className="p-4 space-y-1 text-gray-800 text-sm">
+        <div>
+          <span className="font-semibold">Owner:</span> {data.name}
+        </div>
+        <div>
+          <span className="font-semibold">Machine:</span> {data.machine}
+        </div>
+        <div>
+          <span className="font-semibold">Location:</span> {data.location}
+        </div>
+        <div>
+          <span className="font-semibold">Cost/Day:</span> ₹{data.costperday}
+        </div>
+        <div>
+          <span className="font-semibold">Phone:</span> {data.phone}
+        </div>
       </div>
-      <div className="flex justify-between w-63">
-        <div className="ml-3">Machine </div>
-        <div className="font-extrabold">{data.machine}</div>
-      </div>
-      <div className="flex justify-between w-63">
-        <div className="ml-3">Location </div>
-        <div className="font-extrabold">{data.location}</div>
-      </div>
-      <div className="flex justify-between w-63">
-        <div className="ml-3">CostPerDay </div>
-        <div className="font-extrabold">{data.costperday}</div>
-      </div>
-      <div className="flex justify-between w-63">
-        <div className="ml-3">Phno </div>
-        <div className=" font-extrabold">{data.phone}</div>
-      </div>
-      <div className="flex mt-5 w-67 h-10 gap-3 mb-2 ">
+
+      <div className="p-4 pt-2 flex flex-col gap-2">
         <Popover>
           <PopoverTrigger asChild>
             <Button
               variant="outline"
-              data-empty={!date}
-              className="data-[empty=true]:text-muted-foreground w-[180px] justify-start text-left font-normal mt-2 border-1 border-black"
+              className="w-full justify-start text-left font-normal border border-gray-300"
             >
-              <CalendarIcon className="mr-2 h-4 w-4" />
-              {date ? format(date, "PPP") : <span>Pick a date</span>}
+              <CalendarIcon className="mr-2 h-4 w-4 text-gray-500" />
+              {date ? (
+                format(date, "PPP")
+              ) : (
+                <span className="text-gray-400">Select a date</span>
+              )}
             </Button>
           </PopoverTrigger>
-          <PopoverContent className="w-auto p-0">
+          <PopoverContent className="w-auto p-0 z-50 bg-white border border-gray-300 rounded-lg shadow-lg">
             <Calendar
               mode="single"
               selected={date}
               onSelect={setDate}
-              disabled={(date) =>
-                date < new Date(new Date().setHours(0, 0, 0, 0))
-              }
+              disabled={(d) => d < new Date(new Date().setHours(0, 0, 0, 0))}
               initialFocus
             />
           </PopoverContent>
         </Popover>
-        <button
-          className="bg-gray-400 h-15 px-2  pt-1 rounded-2xl hover:bg-green-400 cursor-pointer border-1 border-black"
+
+        <Button
           onClick={handleSendRequest}
+          className="bg-green-600 hover:bg-green-700 text-white w-full rounded-md font-semibold"
         >
           Send Request
-        </button>
+        </Button>
       </div>
     </div>
   );

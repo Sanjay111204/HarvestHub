@@ -1,16 +1,7 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import logoimg from "../assets/logo.png";
 import { useClerk } from "@clerk/clerk-react";
-import {
-  SignedIn,
-  SignedOut,
-  SignInButton,
-  SignIn,
-  UserButton,
-} from "@clerk/clerk-react";
-import { useRef } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
-import { useEffect } from "react";
 
 const loginpage = () => {
   const { openSignIn } = useClerk();
@@ -22,6 +13,7 @@ const loginpage = () => {
   const navigate = useNavigate();
   const loc = useLocation();
   const { a, b, c } = loc.state || {};
+
   useEffect(() => {
     settoken(a);
     setuserid(b);
@@ -35,6 +27,7 @@ const loginpage = () => {
     }
     navigate("/Sign");
   };
+
   function buyerfunc() {
     if (token) {
       navigate("/Buyer", { state: loc.state });
@@ -47,6 +40,7 @@ const loginpage = () => {
     };
     navigate("/sign", { state: temp });
   }
+
   function Sellerfunc() {
     if (token) {
       navigate("/Seller", { state: loc.state });
@@ -59,95 +53,96 @@ const loginpage = () => {
     };
     navigate("/sign", { state: temp });
   }
-  // const closesignin = (e) => {
-  //   if (e.target === e.currentTarget) {
-  //     setSeller(false);
-  //     setbuyer(false);
-  //   }
-  // };
 
   return (
-    <div className=" bg-gray-200 ">
-      <div className="flex p-5 bg-gray-50 align-middle ">
-        <img src={logoimg} className="h-15 w-auto mr-3 pl-5"></img>
-        <div className="pt-4 font-logo text-2xl">HarvestHub</div>
-        <div
-          className="ml-240 mt-5 cursor-pointer hover:text-green-500 "
-          onClick={() => {
-            if (!token) handleSignin();
-            else navigate("/");
-          }}
-        >
+    <div className="min-h-screen bg-gradient-to-br from-green-50 to-gray-100 text-gray-800 font-sans">
+      {/* Header */}
+      <header className="flex justify-between items-center px-6 py-4 bg-white shadow-sm">
+        <div className="flex items-center">
+          <img src={logoimg} alt="Logo" className="h-10 w-auto mr-3" />
+          <h1 className="text-2xl font-bold text-green-700">HarvestHub</h1>
+        </div>
+
+        <div className="flex items-center gap-4">
           {token ? (
-            <div className="flex gap-3 ">
-              <button
-                className="bg-gray-400 p-2 rounded-xl hover:bg-red-400 cursor-pointer pt-3 ml-30  hover:text-black pb-3 px-4 border-1 border-black"
-                onClick={() => {}}
-              >
-                {name}
-              </button>
-            </div>
+            <button
+              className="bg-green-100 text-green-800 px-4 py-2 rounded-xl hover:bg-green-200 transition font-medium"
+              onClick={() => {}}
+            >
+              {name}
+            </button>
           ) : (
-            <p className="underline ml-40">Sign_in</p>
+            <p
+              onClick={handleSignin}
+              className="text-green-600 underline cursor-pointer hover:text-green-800 transition"
+            >
+              Sign In
+            </p>
           )}
         </div>
-      </div>
-      {/* {buyer && (
-        <div
-          className="fixed justify-center bg-opacity-50 inset-0 flex items-center "
-          onClick={closesignin}
-        >
-          <SignIn
-            signUpForceRedirectUrl="/Buyer"
-            fallbackRedirectUrl="/Buyer"
-          ></SignIn>
-        </div>
-      )}
-      {Seller && (
-        <div
-          className="fixed justify-center bg-opacity-50 inset-0 flex items-center"
-          onClick={closesignin}
-        >
-          <SignIn
-            signUpForceRedirectUrl="/Seller"
-            fallbackRedirectUrl="/Seller"
-          ></SignIn>
-        </div>
-      )} */}
-      <div className="flex h-183 items-center justify-center ">
-        <div>
-          <div className="flex justify-center font-body">
-            <div className="text-4xl">Welcome to HarvestHub</div>
-          </div>
-          <div className="flex justify-center font-body">
-            <div className="text-2xl p-5 pl-30 pr-30 text-center">
-              HarvestHub is one of the best platforms for renting farming
-              equipment. Whether you're a farmer looking to rent tools or earn
-              by sharing yours, we make it easy, secure, and local.
-            </div>
-          </div>
-          <div className="flex justify-center font-body">
-            <div className="text-2xl p-3 pl-30 pr-30 text-center">
-              Go Green..<span className="material-symbols-outlined">eco</span>
-            </div>
-          </div>
-          <div className="flex justify-center p-5 gap-15">
-            <button
-              className="font-body text-2xl bg-gray-300 p-3 pl-8 pr-8 pt-4 rounded-2xl hover:bg-gray-400 cursor-pointer border-black border-1"
-              onClick={() => buyerfunc()}
-            >
-              Rent Equipment
-            </button>
+      </header>
 
-            <button
-              className="font-body text-2xl bg-gray-300 p-3 pl-4 pr-4 pt-4 rounded-2xl hover:bg-gray-400 cursor-pointer  border-black border-1"
-              onClick={() => Sellerfunc()}
-            >
-              Lend My Equipment
-            </button>
+      {/* Main Content */}
+      <main className="flex flex-col justify-center items-center min-h-[calc(100vh-80px)] px-4 text-center">
+        <h2 className="text-4xl font-bold mb-4 text-green-800">
+          Welcome to HarvestHub
+        </h2>
+        <p className="text-lg max-w-2xl mb-4 text-gray-700">
+          HarvestHub is the go-to platform for renting and lending farming
+          equipment. Whether you're a farmer in need or someone looking to earn
+          by sharing, we make it secure and local.
+        </p>
+        <p className="text-xl text-green-700 mb-8">
+          Go Green{" "}
+          <span className="material-symbols-outlined align-middle">eco</span>
+        </p>
+
+        {/* Feature highlights */}
+        <div className="grid sm:grid-cols-3 gap-6 max-w-5xl mb-10 text-left">
+          <div className="bg-white rounded-xl shadow p-5 border-t-4 border-green-500">
+            <h3 className="text-xl font-semibold mb-2 text-green-700">
+              🚜 Easy Equipment Access
+            </h3>
+            <p className="text-gray-600 text-sm">
+              Find the right tools without buying them. Rent from farmers near
+              you with just a few clicks.
+            </p>
+          </div>
+          <div className="bg-white rounded-xl shadow p-5 border-t-4 border-green-500">
+            <h3 className="text-xl font-semibold mb-2 text-green-700">
+              💼 Earn by Lending
+            </h3>
+            <p className="text-gray-600 text-sm">
+              Let your idle tools work for you. List your equipment and start
+              earning with confidence and security.
+            </p>
+          </div>
+          <div className="bg-white rounded-xl shadow p-5 border-t-4 border-green-500">
+            <h3 className="text-xl font-semibold mb-2 text-green-700">
+              🔒 Secure Transactions
+            </h3>
+            <p className="text-gray-600 text-sm">
+              All rentals are protected and verified. We prioritize trust, so
+              you can focus on what matters most — your farm.
+            </p>
           </div>
         </div>
-      </div>
+
+        <div className="flex flex-col sm:flex-row gap-6">
+          <button
+            onClick={buyerfunc}
+            className="bg-green-600 text-white px-6 py-3 rounded-xl text-lg hover:bg-green-700 transition shadow-md"
+          >
+            Rent Equipment
+          </button>
+          <button
+            onClick={Sellerfunc}
+            className="bg-white border border-green-600 text-green-700 px-6 py-3 rounded-xl text-lg hover:bg-green-50 transition shadow-md"
+          >
+            Lend My Equipment
+          </button>
+        </div>
+      </main>
     </div>
   );
 };

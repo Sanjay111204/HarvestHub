@@ -1,106 +1,101 @@
-import React from "react";
-import { useNavigate, useLocation } from "react-router-dom";
-import { useState, useEffect } from "react";
-import logoimg from "../assets/logo.png";
+import React, { useEffect, useState } from "react";
+import { useLocation, useNavigate } from "react-router-dom";
 import axios from "axios";
+import logoimg from "../assets/logo.png";
 import ResponseCard from "./ResponseCard";
 
 const ShowStatus = () => {
-  let navigate = useNavigate();
-  const [token, settoken] = useState("");
-  const [userid, setuserid] = useState("");
-  const [name, setname] = useState("");
-  const [data, setdata] = useState([]);
-  const [loading, setloading] = useState(true);
+  const navigate = useNavigate();
   const loc = useLocation();
+
+  const [token, setToken] = useState("");
+  const [userId, setUserId] = useState("");
+  const [name, setName] = useState("");
+  const [data, setData] = useState([]);
+
   useEffect(() => {
     const { a, b, c } = loc.state || {};
-    settoken(a);
-    setuserid(b);
-    setname(c);
-    const verify = async () => {
+    setToken(a);
+    setUserId(b);
+    setName(c);
+
+    const fetchStatus = async () => {
       try {
-        console.log(`token:${a}`);
-        const res = await axios.get(
+        await axios.get(
           "https://harvesthub-h4eh.onrender.com/api/auth/profile",
           {
             headers: { Authorization: `Bearer ${a}` },
           }
         );
-        const res1 = await axios.post(
+        const res = await axios.post(
           "https://harvesthub-h4eh.onrender.com/api/request/pullstatus",
           {
             id: b,
           }
         );
-        setdata(res1.data);
-        setloading(false);
-        console.log(res1.data);
+        setData(res.data);
       } catch (error) {
-        console.log(error);
-        alert("Login is required..");
+        console.error(error);
+        alert("Login is required.");
         navigate("/");
       }
     };
-    verify();
-  }, [loc.state]);
 
-  const handlestatus = async () => {
-    navigate("/Buyer/status", { state: loc.state });
-  };
+    fetchStatus();
+  }, [loc.state, navigate]);
 
   return (
-    <div className=" bg-gray-200">
-      <div className="flex p-5 bg-gray-50 align-middle ">
-        <img src={logoimg} className="h-15 w-auto mr-3 pl-5"></img>
-        <div className="pt-4 font-logo text-2xl">HarvestHub</div>
-        <button
-          className=" flex ml-190 pl-20 pr-20 font-body pt-5 bg-gray-200 rounded-2xl cursor-pointer hover:bg-gray-300 text-xl border-1 border-black"
-          onClick={() => {
-            console.log("hi");
-            navigate("/Seller", { state: loc.state });
-          }}
-        >
-          <span class="material-symbols-outlined pr-1">sync</span>
-          <div className="w-12">Lend</div>
-        </button>
+    <div className="min-h-screen bg-gray-100 font-sans">
+      {/* Header */}
+      <header className="flex items-center justify-between px-6 py-4 bg-white shadow-sm border-b">
+        <div className="flex items-center gap-3">
+          <img src={logoimg} alt="Logo" className="h-9 w-auto" />
+          <h1 className="text-2xl font-bold text-green-700 tracking-tight">
+            HarvestHub
+          </h1>
+        </div>
 
-        <div className="ml-3 mt-2 font-body  ">
-          {token ? (
-            <div className="flex ">
-              <button
-                className="bg-gray-400 p-2 rounded-xl hover:bg-red-400 cursor-pointer pt-3 ml-25 px-6 hover:text-black pb-3 underline border-1 border-black"
-                onClick={() => {
-                  navigate("/");
-                }}
-              >
-                {name}
-              </button>
-            </div>
-          ) : (
-            <p className="underline ml-40">Sign_in</p>
-          )}
+        <div className="flex gap-3 items-center">
+          <button
+            className="bg-gray-200 hover:bg-gray-300 px-4 py-1.5 rounded-full text-gray-700 font-medium"
+            onClick={() => navigate(-1)}
+          >
+            ← Back
+          </button>
+          <button
+            className="bg-red-100 hover:bg-red-200 px-4 py-1.5 rounded-full text-red-800 font-medium"
+            onClick={() => navigate("/")}
+          >
+            {name}
+          </button>
         </div>
-      </div>
+      </header>
 
-      {/* <hr className="border-t border-gray-400 my-1" /> */}
-      {loading && (
-        <div className=" flex h-190 justify-center items-center text-2xl font-body ">
-          <div className="">Loading....</div>
-        </div>
-      )}
-      {!loading && (
-        <div className=" flex min-h-screen  ">
-          <ul className=" flex flex-wrap justify-center mt-5 ">
-            {data &&
-              data.map((d) => (
-                <li key={d.id}>
-                  <ResponseCard data={d} username={name} user_id={userid} />
-                </li>
-              ))}
-          </ul>
-        </div>
-      )}
+      {/* Section Title */}
+      <section className="flex justify-between items-center px-6 py-4 bg-white border-b">
+        <h2 className="text-xl font-semibold text-gray-800">
+          Your Rental Requests Status
+        </h2>
+      </section>
+
+      <main className="p-6">
+        {data.length === 0 ? (
+          <div className="text-center text-gray-600 mt-10">
+            No requests made yet.
+          </div>
+        ) : (
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+            {data.map((d) => (
+              <ResponseCard
+                key={d.id}
+                data={d}
+                username={name}
+                user_id={userId}
+              />
+            ))}
+          </div>
+        )}
+      </main>
     </div>
   );
 };
