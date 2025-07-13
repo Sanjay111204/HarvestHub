@@ -54,7 +54,7 @@ const DisplayBuyerPosts = ({ data, username, user_id }) => {
       />
       <div className="p-4 space-y-1 text-gray-800 text-sm">
         <div>
-          <span className="font-semibold">Owner:</span> {data.name}
+          <span className="font-semibold">Owner:</span> {data.owner_name}
         </div>
         <div>
           <span className="font-semibold">Machine:</span> {data.machine}
